@@ -21,7 +21,7 @@ pullCryptoData <- function(tablenameQuery = c('Messari'), ...){
   # Disconnect from the database
   dbDisconnect(con)
   # Disconnect all connections just to be safe
-  lapply(dbListConnections(dbDriver(drv = "MySQL")), dbDisconnect)
+  #lapply(dbListConnections(dbDriver(drv = "MySQL")), dbDisconnect)
 
   return(latestCryptoData)
 

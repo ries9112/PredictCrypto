@@ -2,12 +2,9 @@
 #'@importFrom pins board_register_github
 #'@importFrom pins pin_get
 #'@importFrom dplyr arrange
+#'@importFrom vroom vroom
 refresh_pin <- function(){
   Sys.setenv(user='tutorials', pswd='WebsiteTutorials',ipAddress='35.188.12.15')
-
-
-  #Keep these steps disabled while developing but remember to un-comment these out!
-
   getSqlConnection <- function(){
     con <-
       dbConnect(
@@ -28,20 +25,17 @@ refresh_pin <- function(){
 
   cryptoData <- dbFetch(dbSendQuery(database_connection, query), 250000)
 
-  board_register_github(name = "github", repo = "ries9112/Pins", branch = "master", token = "60e62d78a30e794602650fbeb15cc31c40dd7c24") # all priviliges
   cryptoData <- dplyr::arrange(cryptoData, desc(DateExtracted))
 
-  # cryptoData <<- lapply(cryptoData, function(x) if(is.integer(x)) as.numeric(x) else x)
-  write.csv(cryptoData, 'cryptoData.csv')
-  cryptoData <<- read.csv("cryptoData.csv")
+  fileName <- paste0('cryptoData-',as.integer(Sys.time()),'.csv')
 
-  pin(cryptoData,board='github')
+  write.csv(cryptoData, fileName)
+  cryptoData <<- vroom::vroom(fileName)
+
+  pins::board_register_github(name = "github", repo = "ries9112/Pins", branch = "master", token = "8b239c30b8ff44ac685fd0fb2c84f4fed9aa67c3")
+
+  pins::pin(cryptoData,board='github')
+
+  # Disconnect from the database
+  dbDisconnect(con)
 }
-
-
-
-# cryptoData$DateTimeColoradoMST <- as.POSIXct(cryptoData$DateTimeColoradoMST,format="%Y-%m-%d %H:%M:%S", tz = "MST")
-
-
-
-
