@@ -1,7 +1,6 @@
 #'@importFrom RMySQL MySQL
 #'@export
 pullCryptoData <- function(tablenameQuery = c('Messari'), ...){
-  Sys.setenv(user='tutorials', pswd='WebsiteTutorials',ipAddress='35.188.12.15')
   con <-
     dbConnect(
       RMySQL::MySQL(),
