@@ -1,24 +1,37 @@
-# Add roxygen skeleton, using dplyr!
-calculate_perc_Change <- function(cryptoData, hours){
+#'@importFrom anytime anytime
+#'@export
+calculate_perc_change <- function(dfHLater, enterHours){
+  dfHLater <- utils::type.convert(dfHLater, as.is=TRUE)
+  dfHLater$DateTimeColoradoMST <- anytime::anytime(dfHLater$DateTimeColoradoMST)
+  #exclude most recent 12 hours since they wouldn't have data
+  #df12hLater_new <- filter(dfHLater, DateTimeColoradoMST <= max(df$DateTimeColoradoMST) - hours(12) )
+  dfHLater$DateTimeColoradoMST <- dfHLater$DateTimeColoradoMST - lubridate::hours(enterHours)
+  #Replace pkDummy
+  dfHLater$pkDummy <-substr(dfHLater$DateTimeColoradoMST, 1, 13)
+  df$pkDummy <-substr(df$DateTimeColoradoMST, 1, 13)
+  #Create both pkeys
+  df$pkey <- paste0(df$pkDummy,df$Name)
+  dfHLater$pkey <- paste0(dfHLater$pkDummy,dfHLater$Name)
+  #Re-adjust the 12hLater time
+  dfHLater$DateTimeColoradoMST <- dfHLater$DateTimeColoradoMST + hours(enterHours)
+  #narrow down new dataframe to just the Price
+  dfHLater <- select(dfHLater, PriceUSD, pkey, DateTimeColoradoMST) %>% rename(PriceUSD_XhoursLater = PriceUSD, DateTimeColoradoMST_XhoursLater = DateTimeColoradoMST)
+  #join data
+  joinedDataset <- left_join(df, dfHLater, by='pkey')
+  joinedDataset <- filter(joinedDataset, DateTimeColoradoMST <= max(df$DateTimeColoradoMST) - hours(enterHours) )
+  #Now calculate % change
+  joinedDataset$TargetPercChange <- ((joinedDataset$PriceUSD_XhoursLater-joinedDataset$PriceUSD) / joinedDataset$PriceUSD) * 100
+  #Remove first column of the data "X"
+  joinedDataset <- select(joinedDataset,-1)
 
-  # offset hours by specified amount
-  cryptoDataOffset <- cryptoData
-  cryptoDataOffset$DateTimeExtractedColoradoMSTtime <- #add 3 hours to variable and overwrite it
+  #colnames(joinedDataset)[colnames(joinedDataset)=="PriceUSD_XhoursLater"] <- paste0('PriceUSD_',enterHours,'_hours_later')
 
-  # now overwrite pkDummy with offset pkDummy
-  cryptoDataOffset$pkDummy <-
-
-  # now create new pkey
-  cryptoDataOffset$pkey <- paste0(cryptoDataOffset$pkDummy, cryptoDataOffset$Name)
-
-  # rename the priceUSD to be PriceUSD_x_hours_later
-  dplyr::rename(cryptoDataOffset, PriceUSD_x_hours_later = PriceUSD)
-
-  # now join the data
-
-  # calculate % change between values
-
-
+  return(joinedDataset)
 }
+
+#### IMPORTANT NOTE FOR CODE ABOVE. RATHER THAN HAVING "XhoursLater", find a way to concat the string of the field name with the user input enterHours! Important, do it before tutorial is too far along!
+
+
+
 
 # remember to create a function just like this but pre-made for a 24 hour period called calculate_24hour_perc_change()
