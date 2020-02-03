@@ -1,7 +1,7 @@
 #'@importFrom anytime anytime
 #'@export
 calculate_perc_change <- function(dfHLater, enterHours){
-  dfHLater <- utils::type.convert(dfHLater, as.is=TRUE)
+  #dfHLater <- utils::type.convert(dfHLater, as.is=TRUE)
   # dfHLater$DateTimeColoradoMST <- anytime::anytime(dfHLater$DateTimeColoradoMST)
   #exclude most recent 12 hours since they wouldn't have data
   #df12hLater_new <- filter(dfHLater, DateTimeColoradoMST <= max(df$DateTimeColoradoMST) - hours(12) )

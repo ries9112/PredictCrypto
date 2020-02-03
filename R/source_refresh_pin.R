@@ -1,9 +1,6 @@
-#'@importFrom RMySQL MySQL
-#'@importFrom pins board_register_github
-#'@importFrom pins pin_get
-#'@importFrom dplyr arrange
-#'@importFrom vroom vroom
-refresh_pin <- function(){
+# source this. For some reason doesn't work when wrapped as a function but works fine when sourced.
+# This one should be hidden so it's fine to source it in the script that runs once an hour to refresh the data
+
   Sys.setenv(user='tutorials', pswd='WebsiteTutorials',ipAddress='35.188.12.15')
   getSqlConnection <- function(){
     con <-
@@ -38,4 +35,4 @@ refresh_pin <- function(){
 
   # Disconnect from the database
   dbDisconnect(database_connection)
-}
+
