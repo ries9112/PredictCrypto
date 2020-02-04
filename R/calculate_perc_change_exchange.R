@@ -24,7 +24,7 @@ calculate_perc_change_exchange <- function (crypto_dataset, enterHours)
   #re-adjust offset
   crypto_datasetHLater$DateTimeColoradoTimeMST <- crypto_datasetHLater$DateTimeColoradoTimeMST + lubridate::hours(enterHours)
 
-  crypto_datasetHLater <- dplyr::select(crypto_datasetHLater, PriceUSD, pkey, DateTimeColoradoTimeMST) %>%
+  crypto_datasetHLater <- dplyr::select(crypto_datasetHLater, PriceUSD, pkey, DateTimeColoradoTimeMST, Exchange) %>%
     dplyr::rename(PriceUSD_x_hoursLater = PriceUSD, DateTimeColoradoTimeMST_x_hoursLater = DateTimeColoradoTimeMST)
 
   joinedDataset <- dplyr::left_join(crypto_dataset, crypto_datasetHLater, by = c("pkey" = "pkey" , 'Exchange' = 'Exchange'))
