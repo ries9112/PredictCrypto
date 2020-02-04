@@ -36,7 +36,7 @@ calculate_perc_change <- function (crypto_dataset, enterHours)
 
   joinedDataset <- dplyr::select(joinedDataset, -1)
 
-  crypto_dataset <<- joinedDataset %>% dplyr::filter(!is.na(TargetPercChange))
+  return(joinedDataset %>% dplyr::filter(!is.na(TargetPercChange)))
   #return(crypto_dataset)
 }
 
