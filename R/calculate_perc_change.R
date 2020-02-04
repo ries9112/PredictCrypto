@@ -36,8 +36,8 @@ calculate_perc_change <- function (df, enterHours)
 
   joinedDataset <- dplyr::select(joinedDataset, -1)
 
-  joinedDataset <<- joinedDataset %>% dplyr::filter(!is.na(TargetPercChange))
-  return(joinedDataset)
+  cryptoData <<- joinedDataset %>% dplyr::filter(!is.na(TargetPercChange))
+  return(cryptoData)
 }
 
 #### IMPORTANT NOTE FOR CODE ABOVE. RATHER THAN HAVING "XhoursLater", find a way to concat the string of the field name with the user input enterHours! Important, do it before tutorial is too far along!
