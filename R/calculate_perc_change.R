@@ -8,7 +8,7 @@ calculate_perc_change <- function(dfHLater, enterHours){
   dfHLater$DateTimeColoradoMST <- anytime::anytime(dfHLater$DateTimeColoradoMST)
   #exclude most recent 12 hours since they wouldn't have data
   #df12hLater_new <- filter(dfHLater, DateTimeColoradoMST <= max(df$DateTimeColoradoMST) - hours(12) )
-  dfHLater$DateTimeColoradoMST <- dfHLater$DateTimeColoradoMST - lubridate::hours(enterHours)
+  dfHLater$DateTimeColoradoMST <- dfHLater$DateTimeColoradoMST - (enterHours * 60 * 60)
   #Replace pkDummy
   dfHLater$pkDummy <-substr(dfHLater$DateTimeColoradoMST, 1, 13)
   df$pkDummy <-substr(df$DateTimeColoradoMST, 1, 13)
