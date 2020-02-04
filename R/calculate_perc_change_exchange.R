@@ -27,7 +27,7 @@ calculate_perc_change_exchange <- function (crypto_dataset, enterHours)
   crypto_datasetHLater <- dplyr::select(crypto_datasetHLater, PriceUSD, pkey, DateTimeColoradoTimeMST) %>%
     dplyr::rename(PriceUSD_x_hoursLater = PriceUSD, DateTimeColoradoTimeMST_x_hoursLater = DateTimeColoradoTimeMST)
 
-  joinedDataset <- dplyr::left_join(crypto_dataset, crypto_datasetHLater, by = c("pkey", 'Exchange'))
+  joinedDataset <- dplyr::left_join(crypto_dataset, crypto_datasetHLater, by = c("pkey" = "pkey" , 'Exchange' = 'Exchange'))
   #joinedDataset <- filter(joinedDataset, joinedDataset$DateTimeColoradoTimeMST <=
   #                          max(crypto_dataset$DateTimeColoradoTimeMST) - (24*60*60 )
 
