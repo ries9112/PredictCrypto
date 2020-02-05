@@ -16,3 +16,18 @@ install_github("ries9112/PredictCrypto")
 ```
 
 ## Examples
+
+
+## To-do
+
+* Setup CI to refresh data `cryptoData` that comes with the package hourly
+
+* Document functions
+
+* Calculate target % change using BTC instead of USD
+
+* Create variable names based on hours chosen for % change calculation
+
+* Create data by exchange made available through package
+
+* Create plotting functions
