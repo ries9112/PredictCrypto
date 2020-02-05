@@ -4,7 +4,6 @@
 #'@importFrom dplyr arrange
 #'@importFrom vroom vroom
 refresh_pin <- function(){
-  Sys.setenv(user='tutorials', pswd='WebsiteTutorials',ipAddress='35.188.12.15')
   getSqlConnection <- function(){
     con <-
       dbConnect(

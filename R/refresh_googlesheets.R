@@ -3,11 +3,6 @@
 #'@importFrom pins pin_get
 #'@importFrom dplyr arrange
 refresh_googlesheets <- function(){
-  Sys.setenv(user='tutorials', pswd='WebsiteTutorials',ipAddress='35.188.12.15')
-
-
-  #Keep these steps disabled while developing but remember to un-comment these out!
-
   getSqlConnection <- function(){
     con <-
       dbConnect(
