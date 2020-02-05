@@ -1,7 +1,7 @@
 
 # PredictCrypto
 
-# This package is not ready yet but is made public so I can use it for my own development
+# This package is not ready yet and is here so I can use it for my own development
 
 <!-- badges: start -->
 <!-- badges: end -->
