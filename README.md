@@ -1,7 +1,7 @@
 
 # PredictCrypto
 
-# This package is not ready yet but is made public so I can use it for my own development
+# This package is not ready yet and is here so I can use it for my own development
 
 <!-- badges: start -->
 [![R build status](https://github.com/ries9112/PredictCrypto/workflows/R-CMD-check/badge.svg)](https://github.com/ries9112/PredictCrypto/actions)
@@ -12,18 +12,24 @@ The goal of PredictCrypto is to ...
 
 ## Installation
 
-You can install the released version of PredictCrypto from [CRAN](https://CRAN.R-project.org) with:
-
 ``` r
-install.packages("PredictCrypto")
+library(devtools)
+install_github("ries9112/PredictCrypto")
 ```
 
-## Example
+## Examples
 
-This is a basic example which shows you how to solve a common problem:
 
-``` r
-library(PredictCrypto)
-## basic example code
-```
+## To-do
 
+* Setup CI to refresh data `cryptoData` that comes with the package hourly
+
+* Document functions
+
+* Calculate target % change using BTC instead of USD
+
+* Create variable names based on hours chosen for % change calculation
+
+* Create data by exchange made available through package
+
+* Create plotting functions
