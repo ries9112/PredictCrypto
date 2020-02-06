@@ -18,3 +18,7 @@ Imports:
     pins,
     vroom,
     lubridate
+URL: https://github.com/ries9112/PredictCrypto
+BugReports: https://github.com/ries9112/PredictCrypto/issues
+Suggests: 
+    covr
