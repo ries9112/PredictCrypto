@@ -12,4 +12,5 @@ jobs:
           repo-token: ${{ secrets.GITHUB_PAT }}
       - name: Print
         run: Rscript -e "print('hello')"
+        pull_number: 123
 
