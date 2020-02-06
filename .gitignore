@@ -4,3 +4,4 @@
 .Ruserdata
 R/kaggle.json
 cryptoData-*.csv
+R-CMD-check-tidy.yaml
