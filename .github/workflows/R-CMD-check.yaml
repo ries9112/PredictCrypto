@@ -7,7 +7,7 @@ jobs:
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install dependencies
-        run: Rscript -e "print('hello')"
+      - name: test
+        run: echo Hello, world!
 
 
