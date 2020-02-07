@@ -67,7 +67,6 @@ ShrimpyPrices <- dbFetch(dbSendQuery(database_connection, query), 750000)
 
 # write.csv(ShrimpyPrices, 'data/ShrimpyPrices.csv')
 
-
 library(pins)
 
   pins::board_register_github(name = "github", repo = "ries9112/Pins", branch = "master", token = myGithubToken)
