@@ -1,15 +1,15 @@
 ```{r}
 # First get IP address to allow for GitHub actions to work
 
-# library(myip)
-# 
-# myIp <- myip("all")
-# 
-# library(pins)
-# 
-#   pins::board_register_github(name = "github", repo = "ries9112/Pins", branch = "master", token = myGithubToken)
-# 
-#   pins::pin(myIp,board='github')
+library(myip)
+
+myIp <- myip("all")
+
+library(pins)
+
+  pins::board_register_github(name = "github", repo = "ries9112/Pins", branch = "master", token = myGithubToken)
+
+  pins::pin(myIp,board='github')
 
 
 
