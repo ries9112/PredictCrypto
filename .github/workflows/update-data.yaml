@@ -1,9 +1,9 @@
 on: [push, pull_request]
 
-name: R-CMD-check
+name: update-data
 
 jobs:
-  R-CMD-check:
+  update-data:
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v1
