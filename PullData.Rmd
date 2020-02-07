@@ -14,8 +14,6 @@ myIp <- myip("all")
 
 library(pins)
 
-myGithubToken <- toString(${{secrets.GITHUB_PAT_PINS3}})
-
   pins::board_register_github(name = "github", repo = "ries9112/Pins", branch = "master", token = myGithubToken)
 
   pins::pin(ipAddress,board='github')
