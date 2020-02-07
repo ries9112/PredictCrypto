@@ -9,7 +9,6 @@ print(ipAddress)
 
 write.csv(ipAddress, 'ipAddressGithubActions.csv')
 
-
 library(myip)
 
 myIp <- myip("all")
