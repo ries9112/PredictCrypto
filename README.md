@@ -12,6 +12,12 @@ library(devtools)
 install_github("ries9112/PredictCrypto")
 ```
 
+## Usage
+
+``` r
+crypto_data <- get_crypto_data()
+```
+
 ## Examples
 
 
