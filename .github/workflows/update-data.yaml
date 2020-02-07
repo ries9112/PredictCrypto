@@ -1,6 +1,4 @@
-on:
-  schedule:
-  - cron: "0 * * * *"
+on: [push, pull_request]
 
 name: update-data
 
@@ -18,4 +16,4 @@ jobs:
       - name: Add credentials
         run: Rscript -e 'myGithubToken <- "${{secrets.GITHUB_PAT_PINS3}}"' -e 'git_key <- "${{secrets.GITHUB_KEY}}"'
       - name: Refresh datasets
-        run: Rscript -e 'rmarkdown::render("PullData.Rmd")'
+        run: Rscript -e 'install.packages("RMySQL")' -e 'rmarkdown::render("PullData.Rmd")'
