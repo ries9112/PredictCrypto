@@ -9,6 +9,8 @@ jobs:
       - uses: actions/checkout@v1
       - uses: r-lib/actions/setup-r@master
       - name: Install dependencies
-        run: Rscript -e "install.packages(c('usethis', 'devtools','RMySQL','anytime','dplyr','pins','vroom','lubridate','safer'))"
+        run: Rscript -e 'install.packages("remotes")'
+      - name: Install more dependencies
+        run: Rscript -e "install.packages(c('usethis', 'devtools','RMySQL','anytime','dplyr','pins','vroom','lubridate','safer'))" -e 'remotes::install_deps(dependencies = TRUE)'
       - name: Check
         run: Rscript -e "devtools::check()"
