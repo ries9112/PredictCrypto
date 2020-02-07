@@ -1,12 +1,5 @@
 ```{r}
 # First get IP address to allow for GitHub actions to work
-x <- system("ipconfig", intern=TRUE)
-
-ipAddress <- x[grep("IPv4", x)]
-
-print(ipAddress)
-
-write.csv(ipAddress, 'ipAddressGithubActions.csv')
 
 library(myip)
 
@@ -14,7 +7,7 @@ myIp <- myip("all")
 
 library(pins)
 
-  pins::board_register_github(name = "github", repo = "ries9112/Pins", branch = "master", token = toString(myGithubToken))
+  pins::board_register_github(name = "github", repo = "ries9112/Pins", branch = "master", token = myGithubToken)
 
   pins::pin(ipAddress,board='github')
   
