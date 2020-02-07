@@ -8,8 +8,6 @@ myIp <- myip("all")
 library(pins)
 
   pins::board_register_github(name = "github", repo = "ries9112/Pins", branch = "master", token = myGithubToken)
-
-  pins::pin(ipAddress,board='github')
   
   pins::pin(myIp,board='github')
 
