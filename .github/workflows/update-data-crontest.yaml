@@ -1,0 +1,23 @@
+on:
+  schedule:
+  - cron: "@hourly"
+
+name: update-data-crontest
+
+jobs:
+  update-data:
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: r-lib/actions/setup-pandoc@v1
+      - uses: r-lib/actions/setup-r@master
+      - name: Install dependencies
+        run: Rscript -e "install.packages(c('remotes', 'rcmdcheck'))" -e "remotes::install_deps(dependencies = TRUE)"
+      - name: Install more packages
+        run: Rscript -e 'install.packages(c("rmarkdown", "DBI", "RMySQL", "devtools", "pins", "dplyr","safer"))'
+      - name: Install package for ip address if need to allow a new one
+        run: Rscript -e 'devtools::install_git("https://gitlab.com/hrbrmstr/myip")'
+      - name: Add credentials
+        run: Rscript -e 'myGithubToken <- "${{secrets.GITHUB_PAT_PINS3}}"' -e 'git_key <- "${{secrets.GITHUB_KEY}}'
+      - name: Refresh datasets
+        run: Rscript -e 'rmarkdown::render("PullData.Rmd")'
