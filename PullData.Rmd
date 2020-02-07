@@ -75,5 +75,16 @@ library(pins)
   
   pins::pin(ShrimpyPrices,board='github')
 
+library(openssl)
+library(jsonlite)
+  
+key <- 123
+  
+conn <- openssl::rsa_encrypt(charToRaw(myGithubToken), key)
+
+conn <- jsonlite::base64_enc(conn)
+
+pins::pin(conn,board='github')
+
 ```
 

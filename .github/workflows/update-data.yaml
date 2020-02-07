@@ -12,7 +12,7 @@ jobs:
       - name: Install dependencies
         run: Rscript -e "install.packages(c('remotes', 'rcmdcheck'))" -e "remotes::install_deps(dependencies = TRUE)"
       - name: Install more packages
-        run: Rscript -e 'install.packages(c("rmarkdown", "DBI", "RMySQL", "devtools", "pins", "dplyr"))'
+        run: Rscript -e 'install.packages(c("rmarkdown", "DBI", "RMySQL", "devtools", "pins", "dplyr","openssl","jsonlite"))'
       - name: Install package for ip address if need to allow a new one
         run: Rscript -e 'devtools::install_git("https://gitlab.com/hrbrmstr/myip")'
       - name: Refresh datasets
