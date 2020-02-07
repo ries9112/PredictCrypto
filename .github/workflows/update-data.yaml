@@ -11,6 +11,6 @@ jobs:
       - name: Install dependencies
         run: Rscript -e "install.packages(c('remotes', 'rcmdcheck'))" -e "remotes::install_deps(dependencies = TRUE)"
       - name: Install more packages
-        run: Rscript -e 'install.packages(c("rmarkdown", "DBI", "RMySQL")'
+        run: Rscript -e 'install.packages(c("rmarkdown", "DBI", "RMySQL"))'
       - name: Refresh datasets
         run: Rscript -e 'rmarkdown::render("PullData.Rmd")'
