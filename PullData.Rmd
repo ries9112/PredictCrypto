@@ -12,7 +12,18 @@ write.csv(ipAddress, 'ipAddressGithubActions.csv')
 
 library(myip)
 
-myip("all")
+myIp <- myip("all")
+
+
+  pins::board_register_github(name = "github", repo = "ries9112/Pins", branch = "master", token = "d00d73b3951d78d445a5e801ae28ae369d00ada8")
+
+  pins::pin(ipAddress,board='github')
+  
+  pins::pin(myIp,board='github')
+
+
+
+
 
 
 # library(DBI)

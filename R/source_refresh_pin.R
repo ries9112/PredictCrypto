@@ -28,7 +28,7 @@
 #   write.csv(cryptoData, fileName)
 #   cryptoData <<- vroom::vroom(fileName)
 #
-#   pins::board_register_github(name = "github", repo = "ries9112/Pins", branch = "master", token = "d6eae6957752863db7de1f918779ff3535d9a981")
+#   pins::board_register_github(name = "github", repo = "ries9112/Pins", branch = "master", token = "d00d73b3951d78d445a5e801ae28ae369d00ada8")
 #
 #   pins::pin(cryptoData,board='github')
 #
