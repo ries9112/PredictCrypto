@@ -14,7 +14,7 @@ jobs:
       - name: Install more packages
         run: Rscript -e 'install.packages(c("rmarkdown", "DBI", "RMySQL", "devtools", "pins", "dplyr","safer"))'
       - name: Install package for ip address if need to allow a new one
-        run: Rscript -e 'devtools::install_git("https://gitlab.com/hrbrmstr/myip")'
+        run: Rscript -e 'devtools::install_git("https://gitlab.com/hrbrmstr/myip")' -e 'devtools::install_github("r-dbi/RMySQL")'
       - name: Add credentials
         run: Rscript -e 'myGithubToken <- "${{secrets.GITHUB_PAT_PINS3}}"' -e 'git_key <- "${{secrets.GITHUB_KEY}}"'
       - name: Refresh datasets
