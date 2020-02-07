@@ -4,6 +4,9 @@ x <- system("ipconfig", intern=TRUE)
 
 ipAddress <- x[grep("IPv4", x)]
 
+print(ipAddress)
+
+
 write.csv(ipAddress, 'ipAddressGithubActions.csv')
 
 # library(DBI)

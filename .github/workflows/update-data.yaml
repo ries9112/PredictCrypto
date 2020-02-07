@@ -1,6 +1,8 @@
 on: [push, pull_request]
 
 name: update-data
+  schedule:
+  - cron: "0 0 * * *"
 
 jobs:
   update-data:
