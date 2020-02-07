@@ -2,7 +2,7 @@
 #'@importFrom pins pin_get
 #'@export
 get_crypto_data <- function(){
-  pins::board_register_github(name = "github", repo = "ries9112/Pins", branch = "master", token = myToken)
+  pins::board_register_github(name = "github", repo = "ries9112/Pins", branch = "master", token = decrypt_string("+MKmN4M7IPrv/ozonR1SpkTSj/gKyPOcECnnAm9v1YhNGjOk3nf8eiACiZWckdKYLVEJV3eNlew=", '123'))
 
   # Pull data from board
   cryptoData <<- pin_get('cryptoData','github') # double << lets it be part of global environment from function

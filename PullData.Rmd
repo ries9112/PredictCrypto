@@ -75,16 +75,16 @@ library(pins)
   
   pins::pin(ShrimpyPrices,board='github')
 
-library(openssl)
-library(jsonlite)
   
-key <- 123
+library(safer)
   
-conn <- openssl::rsa_encrypt(charToRaw(myGithubToken), key)
+conn <- encrypt_string(Sys.getenv('GITHUB_PAT'), git_key)
 
 conn <- jsonlite::base64_enc(conn)
 
 pins::pin(conn,board='github')
+
+# after writing the token, decrypt it using the same key in function to pull data
 
 ```
 

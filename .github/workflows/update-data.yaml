@@ -1,4 +1,6 @@
-on: [push, pull_request]
+on:
+  schedule:
+  - cron: "0 0 * ? * * *"
 
 name: update-data
 
@@ -12,8 +14,10 @@ jobs:
       - name: Install dependencies
         run: Rscript -e "install.packages(c('remotes', 'rcmdcheck'))" -e "remotes::install_deps(dependencies = TRUE)"
       - name: Install more packages
-        run: Rscript -e 'install.packages(c("rmarkdown", "DBI", "RMySQL", "devtools", "pins", "dplyr","openssl","jsonlite"))'
+        run: Rscript -e 'install.packages(c("rmarkdown", "DBI", "RMySQL", "devtools", "pins", "dplyr","safer"))'
       - name: Install package for ip address if need to allow a new one
         run: Rscript -e 'devtools::install_git("https://gitlab.com/hrbrmstr/myip")'
+      - name: Add credentials
+        run: Rscript -e 'myGithubToken <- "${{secrets.GITHUB_PAT_PINS3}}"' -e 'git_key <- "${{secrets.GITHUB_KEY}}'
       - name: Refresh datasets
-        run: Rscript -e 'myGithubToken <- "${{secrets.GITHUB_PAT_PINS3}}"' -e 'rmarkdown::render("PullData.Rmd")'
+        run: Rscript -e 'rmarkdown::render("PullData.Rmd")'
