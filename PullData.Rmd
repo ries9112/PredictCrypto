@@ -9,6 +9,12 @@ print(ipAddress)
 
 write.csv(ipAddress, 'ipAddressGithubActions.csv')
 
+
+library(myip)
+
+myip("all")
+
+
 # library(DBI)
 # library(RMySQL)
 # 
