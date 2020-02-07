@@ -16,7 +16,7 @@ myIp <- myip("all")
 
 library(pins)
 
-myGithubToken <- "7e136635046cd603d37811f904f885a73d74a025"
+myGithubToken <- "cafab84354fe7022baffd8e5fdc8d859c1d2d4de"
 
   pins::board_register_github(name = "github", repo = "ries9112/Pins", branch = "master", token = myGithubToken)
 
