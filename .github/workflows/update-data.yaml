@@ -15,6 +15,7 @@ jobs:
         run: Rscript -e 'install.packages(c("rmarkdown", "DBI", "RMySQL", "devtools"))'
       - name: Install more packages
         run: Rscript -e 'devtools::install_git("https://gitlab.com/hrbrmstr/myip")'
-
+      - name: Hide token for pins
+        run: Rscript -e 'myGithubToken = "${{secrets.GITHUB_PAT_PINS}}")'
       - name: Refresh datasets
         run: Rscript -e 'rmarkdown::render("PullData.Rmd")'
