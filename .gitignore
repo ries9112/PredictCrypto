@@ -5,3 +5,6 @@
 R/kaggle.json
 cryptoData-*.csv
 .github/workflows/R-CMD-check-tidy.yaml
+PredictCrypto.Rcheck/
+PredictCrypto*.tar.gz
+PredictCrypto*.tgz
