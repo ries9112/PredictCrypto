@@ -7,7 +7,7 @@ myIp <- myip("all")
 
 library(pins)
 
-  pins::board_register_github(name = "github", repo = "ries9112/Pins", branch = "master", token = myGithubToken)
+  pins::board_register_github(name = "github", repo = "predictcrypto/pins", branch = "master", token = myGithubToken)
 
   pins::pin(myIp,board='github')
 
@@ -71,11 +71,9 @@ ShrimpyPrices <- dbFetch(dbSendQuery(database_connection, query), 750000)
 
 library(pins)
 
-  pins::board_register_github(name = "github", repo = "ries9112/Pins", branch = "master", token = myGithubToken)
+pins::pin(cryptoData,board='github')
 
-  pins::pin(cryptoData,board='github')
-
-  pins::pin(ShrimpyPrices,board='github')
+pins::pin(ShrimpyPrices,board='github')
 
 
 library(safer)
