@@ -27,13 +27,14 @@ calculate_perc_change <- function (crypto_dataset, enter_hours)
   crypto_datasetHLater$DateTimeColoradoTimeMST <- crypto_datasetHLater$DateTimeColoradoTimeMST + lubridate::hours(enter_hours)
 
   crypto_datasetHLater <- dplyr::select(crypto_datasetHLater, PriceUSD, pkey, DateTimeColoradoTimeMST) %>%
-    dplyr::rename("PriceUSD_{{ enter_hours }}_hoursLater" = PriceUSD, DateTimeColoradoTimeMST_x_hoursLater = DateTimeColoradoTimeMST)
+    #dplyr::rename("PriceUSD_{{ enter_hours }}_hoursLater" = PriceUSD, DateTimeColoradoTimeMST_x_hoursLater = DateTimeColoradoTimeMST)
+    dplyr::rename(PriceUSD_x_hoursLater = PriceUSD, DateTimeColoradoTimeMST_x_hoursLater = DateTimeColoradoTimeMST)
 
   joinedDataset <- dplyr::left_join(crypto_dataset, crypto_datasetHLater, by = "pkey")
   #joinedDataset <- filter(joinedDataset, joinedDataset$DateTimeColoradoTimeMST <=
   #                          max(crypto_dataset$DateTimeColoradoTimeMST) - (24*60*60 )
 
-  joinedDataset$TargetPercChange <- ((as.numeric(joinedDataset$"PriceUSD_{{ enter_hours }}_hoursLater") -
+  joinedDataset$TargetPercChange <- ((as.numeric(joinedDataset$PriceUSD_x_hoursLater) -
                                         as.numeric(joinedDataset$PriceUSD))/as.numeric(joinedDataset$PriceUSD)) * 100
 
   joinedDataset <- dplyr::select(joinedDataset, -1)
