@@ -5,12 +5,14 @@
 #'@importFrom dplyr rename
 #'@importFrom dplyr filter
 #'@export
-calculate_perc_change <- function (crypto_dataset, enterHours)
+calculate_perc_change <- function (crypto_dataset, enter_hours)
 {
+  crypto_dataset$DateTimeColoradoTimeMST <- anytime(crypto_dataset$DateTimeColoradoTimeMST)
+
   crypto_datasetHLater <- crypto_dataset
 
   #create 24h offset
-  crypto_datasetHLater$DateTimeColoradoTimeMST <- crypto_datasetHLater$DateTimeColoradoTimeMST - lubridate::hours(enterHours)
+  crypto_datasetHLater$DateTimeColoradoTimeMST <- crypto_datasetHLater$DateTimeColoradoTimeMST - lubridate::hours(enter_hours)
 
   #replace pkDummy
   crypto_datasetHLater$pkDummy <- substr(paste(as.POSIXct(crypto_datasetHLater$DateTimeColoradoTimeMST,format="%Y-%m-%d"), format(as.POSIXct(crypto_datasetHLater$DateTimeColoradoTimeMST,format="%H:%M:%S"),"%H")),1,13)
@@ -22,17 +24,17 @@ calculate_perc_change <- function (crypto_dataset, enterHours)
   crypto_datasetHLater$pkey <- paste(crypto_datasetHLater$pkDummy, crypto_datasetHLater$Name)
 
   #re-adjust offset
-  crypto_datasetHLater$DateTimeColoradoTimeMST <- crypto_datasetHLater$DateTimeColoradoTimeMST + lubridate::hours(enterHours)
+  crypto_datasetHLater$DateTimeColoradoTimeMST <- crypto_datasetHLater$DateTimeColoradoTimeMST + lubridate::hours(enter_hours)
 
   crypto_datasetHLater <- dplyr::select(crypto_datasetHLater, PriceUSD, pkey, DateTimeColoradoTimeMST) %>%
-    dplyr::rename(PriceUSD_x_hoursLater = PriceUSD, DateTimeColoradoTimeMST_x_hoursLater = DateTimeColoradoTimeMST)
+    dplyr::rename("PriceUSD_{{ enter_hours }}_hoursLater" = PriceUSD, DateTimeColoradoTimeMST_x_hoursLater = DateTimeColoradoTimeMST)
 
   joinedDataset <- dplyr::left_join(crypto_dataset, crypto_datasetHLater, by = "pkey")
   #joinedDataset <- filter(joinedDataset, joinedDataset$DateTimeColoradoTimeMST <=
   #                          max(crypto_dataset$DateTimeColoradoTimeMST) - (24*60*60 )
 
-  joinedDataset$TargetPercChange <- ((joinedDataset$PriceUSD_x_hoursLater -
-                                        joinedDataset$PriceUSD)/joinedDataset$PriceUSD) * 100
+  joinedDataset$TargetPercChange <- ((as.numeric(joinedDataset$"PriceUSD_{{ enter_hours }}_hoursLater") -
+                                        as.numeric(joinedDataset$PriceUSD))/as.numeric(joinedDataset$PriceUSD)) * 100
 
   joinedDataset <- dplyr::select(joinedDataset, -1)
 

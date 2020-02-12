@@ -22,4 +22,5 @@ Imports:
 URL: https://github.com/ries9112/PredictCrypto
 BugReports: https://github.com/ries9112/PredictCrypto/issues
 Suggests: 
-    covr
+    covr,
+    testthat (>= 2.1.0)
