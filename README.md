@@ -1,3 +1,4 @@
+[![codecov](https://codecov.io/gh/ries9112/PredictCrypto/branch/master/graph/badge.svg)](https://codecov.io/gh/ries9112/PredictCrypto)
 
 # PredictCrypto
 
@@ -14,8 +15,14 @@ install_github("ries9112/PredictCrypto")
 
 ## Usage
 
+Create a new dataset with cryptocurrency data
 ``` r
 crypto_data <- get_crypto_data()
+```
+
+Calculate the % change over a certain number of hours
+``` r
+crypto_data <- calculate_perc_change(crypto_data, 24)
 ```
 
 ## Examples
