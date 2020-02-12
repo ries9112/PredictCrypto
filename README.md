@@ -1,3 +1,4 @@
+[![codecov](https://codecov.io/gh/ries9112/PredictCrypto/branch/master/graph/badge.svg)](https://codecov.io/gh/ries9112/PredictCrypto)
 
 # PredictCrypto
 
