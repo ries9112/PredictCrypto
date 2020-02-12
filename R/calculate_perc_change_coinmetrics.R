@@ -26,16 +26,16 @@ calculate_perc_change_coinmetrics <- function (coin_metrics, enter_hours)
   #re-adjust offset
   coin_metricsHLater$date_time_utc <- coin_metricsHLater$date_time_utc + lubridate::hours(enter_hours)
 
-  coin_metricsHLater <- dplyr::select(coin_metricsHLater, PriceUSD, pkey, date_time_utc) %>%
-    #dplyr::rename("PriceUSD_{{ enter_hours }}_hoursLater" = PriceUSD, date_time_utc_x_hoursLater = date_time_utc)
-    dplyr::rename(PriceUSD_x_hoursLater = PriceUSD, date_time_utc_x_hoursLater = date_time_utc)
+  coin_metricsHLater <- dplyr::select(coin_metricsHLater, price_usd, pkey, date_time_utc) %>%
+    #dplyr::rename("price_usd_{{ enter_hours }}_hoursLater" = price_usd, date_time_utc_x_hoursLater = date_time_utc)
+    dplyr::rename(price_usd_x_hoursLater = price_usd, date_time_utc_x_hoursLater = date_time_utc)
 
   joinedDataset <- dplyr::left_join(coin_metrics, coin_metricsHLater, by = "pkey")
   #joinedDataset <- filter(joinedDataset, joinedDataset$date_time_utc <=
   #                          max(coin_metrics$date_time_utc) - (24*60*60 )
 
-  joinedDataset$TargetPercChange <- ((as.numeric(joinedDataset$PriceUSD_x_hoursLater) -
-                                        as.numeric(joinedDataset$PriceUSD))/as.numeric(joinedDataset$PriceUSD)) * 100
+  joinedDataset$TargetPercChange <- ((as.numeric(joinedDataset$price_usd_x_hoursLater) -
+                                        as.numeric(joinedDataset$price_usd))/as.numeric(joinedDataset$price_usd)) * 100
 
   joinedDataset <- dplyr::select(joinedDataset, -1)
 
