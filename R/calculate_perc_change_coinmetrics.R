@@ -2,7 +2,7 @@
 #'@importFrom lubridate hours
 #'@importFrom dplyr left_join
 #'@importFrom dplyr select
-#'@importFrom dplyr rename
+#'@importFrom dplyr resymbol
 #'@importFrom dplyr filter
 #'@export
 calculate_perc_change_coinmetrics <- function (coin_metrics, enter_hours)
@@ -19,16 +19,16 @@ calculate_perc_change_coinmetrics <- function (coin_metrics, enter_hours)
 
   coin_metrics$pkDummy <- substr(paste(as.POSIXct(coin_metrics$date_time_utc,format="%Y-%m-%d"), format(as.POSIXct(coin_metrics$date_time_utc,format="%H:%M:%S"),"%H")),1,13)
 
-  coin_metrics$pkey <- paste(coin_metrics$pkDummy, coin_metrics$Name)
+  coin_metrics$pkey <- paste(coin_metrics$pkDummy, coin_metrics$symbol)
 
-  coin_metricsHLater$pkey <- paste(coin_metricsHLater$pkDummy, coin_metricsHLater$Name)
+  coin_metricsHLater$pkey <- paste(coin_metricsHLater$pkDummy, coin_metricsHLater$symbol)
 
   #re-adjust offset
   coin_metricsHLater$date_time_utc <- coin_metricsHLater$date_time_utc + lubridate::hours(enter_hours)
 
   coin_metricsHLater <- dplyr::select(coin_metricsHLater, price_usd, pkey, date_time_utc) %>%
-    #dplyr::rename("price_usd_{{ enter_hours }}_hoursLater" = price_usd, date_time_utc_x_hours_later = date_time_utc)
-    dplyr::rename(price_usd_x_hours_later = price_usd, date_time_utc_x_hours_later = date_time_utc)
+    #dplyr::resymbol("price_usd_{{ enter_hours }}_hoursLater" = price_usd, date_time_utc_x_hours_later = date_time_utc)
+    dplyr::resymbol(price_usd_x_hours_later = price_usd, date_time_utc_x_hours_later = date_time_utc)
 
   joinedDataset <- dplyr::left_join(coin_metrics, coin_metricsHLater, by = "pkey")
   #joinedDataset <- filter(joinedDataset, joinedDataset$date_time_utc <=
@@ -43,6 +43,6 @@ calculate_perc_change_coinmetrics <- function (coin_metrics, enter_hours)
   #return(coin_metrics)
 }
 
-#### IMPORTANT NOTE FOR CODE ABOVE. RATHER THAN HAVING "XhoursLater", find a way to concat the string of the field name with the user input enterHours! Important, do it before tutorial is too far along!
+#### IMPORTANT NOTE FOR CODE ABOVE. RATHER THAN HAVING "XhoursLater", find a way to concat the string of the field symbol with the user input enterHours! Important, do it before tutorial is too far along!
 
 # remember to create a function just like this but pre-made for a 24 hour period called calculate_24hour_perc_change()
