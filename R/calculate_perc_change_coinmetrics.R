@@ -2,7 +2,7 @@
 #'@importFrom lubridate hours
 #'@importFrom dplyr left_join
 #'@importFrom dplyr select
-#'@importFrom dplyr resymbol
+#'@importFrom dplyr rename
 #'@importFrom dplyr filter
 #'@export
 calculate_perc_change_coinmetrics <- function (coin_metrics, enter_hours)
@@ -27,8 +27,8 @@ calculate_perc_change_coinmetrics <- function (coin_metrics, enter_hours)
   coin_metricsHLater$date_time_utc <- coin_metricsHLater$date_time_utc + lubridate::hours(enter_hours)
 
   coin_metricsHLater <- dplyr::select(coin_metricsHLater, price_usd, pkey, date_time_utc) %>%
-    #dplyr::resymbol("price_usd_{{ enter_hours }}_hoursLater" = price_usd, date_time_utc_x_hours_later = date_time_utc)
-    dplyr::resymbol(price_usd_x_hours_later = price_usd, date_time_utc_x_hours_later = date_time_utc)
+    #dplyr::rename("price_usd_{{ enter_hours }}_hoursLater" = price_usd, date_time_utc_x_hours_later = date_time_utc)
+    dplyr::rename(price_usd_x_hours_later = price_usd, date_time_utc_x_hours_later = date_time_utc)
 
   joinedDataset <- dplyr::left_join(coin_metrics, coin_metricsHLater, by = "pkey")
   #joinedDataset <- filter(joinedDataset, joinedDataset$date_time_utc <=
