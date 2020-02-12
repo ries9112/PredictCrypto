@@ -7,7 +7,7 @@
 #'@export
 calculate_perc_change_coinmetrics <- function (coin_metrics, enter_hours)
 {
-  coin_metrics$date_time_utc <- anytime(coin_metrics$date_time_utc)
+  #coin_metrics$date_time_utc <- anytime(coin_metrics$date_time_utc)
 
   coin_metricsHLater <- coin_metrics
 
