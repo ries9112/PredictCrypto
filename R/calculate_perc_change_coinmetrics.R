@@ -34,12 +34,12 @@ calculate_perc_change_coinmetrics <- function (coin_metrics, enter_hours)
   #joinedDataset <- filter(joinedDataset, joinedDataset$date_time_utc <=
   #                          max(coin_metrics$date_time_utc) - (24*60*60 )
 
-  joinedDataset$TargetPercChange <- ((as.numeric(joinedDataset$price_usd_x_hours_later) -
+  joinedDataset$target_perc_change <- ((as.numeric(joinedDataset$price_usd_x_hours_later) -
                                         as.numeric(joinedDataset$price_usd))/as.numeric(joinedDataset$price_usd)) * 100
 
   joinedDataset <- dplyr::select(joinedDataset, -1)
 
-  return(joinedDataset %>% dplyr::filter(!is.na(TargetPercChange)))
+  return(joinedDataset %>% dplyr::filter(!is.na(target_perc_change)))
   #return(coin_metrics)
 }
 
