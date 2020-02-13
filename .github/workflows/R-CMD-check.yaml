@@ -12,7 +12,5 @@ jobs:
         run: Rscript -e "install.packages(c('remotes', 'rcmdcheck', 'testthat', 'covr'))" -e "remotes::install_deps(dependencies = TRUE)"
       - name: Check
         run: Rscript -e "rcmdcheck::rcmdcheck(args = '--no-manual', error_on = 'error')"
-      - name: Import code coverage
-        run: Rscript -e "library(covr)"
       - name: Code Coverage
-        run: Rscript -e "codecov('.', token='${{secrets.CODECOVERAGE}}')"
+        run: Rscript -e "library(covr)" -e "library(testthat)" -e "codecov('.', token='${{secrets.CODECOVERAGE}}')"
