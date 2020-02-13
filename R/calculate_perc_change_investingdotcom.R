@@ -26,7 +26,7 @@ calculate_perc_change_investingdotcom <- function (coin_metrics, enter_hours)
   #re-adjust offset
   coin_metricsHLater$date_time_utc <- coin_metricsHLater$date_time_utc + lubridate::hours(enter_hours)
 
-  coin_metricsHLater <- dplyr::select(coin_metricsHLater, price_usd, pkey, date_time_utc) %>%
+  coin_metricsHLater <- dplyr::select(coin_metricsHLater, price_usd, pkey, date_time_utc, exchange) %>%
     #dplyr::rename("price_usd_{{ enter_hours }}_hoursLater" = price_usd, date_time_utc_x_hours_later = date_time_utc)
     dplyr::rename(price_usd_x_hours_later = price_usd, date_time_utc_x_hours_later = date_time_utc)
 
