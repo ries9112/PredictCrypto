@@ -37,7 +37,7 @@ calculate_perc_change_coinmetrics <- function (coin_metrics, enter_hours)
   joinedDataset$target_perc_change <- ((as.numeric(joinedDataset$price_usd_x_hours_later) -
                                         as.numeric(joinedDataset$price_usd))/as.numeric(joinedDataset$price_usd)) * 100
 
-  joinedDataset <- dplyr::select(joinedDataset, -1)
+  #joinedDataset <- dplyr::select(joinedDataset, -1)
 
   return(joinedDataset %>% dplyr::filter(!is.na(target_perc_change)))
   #return(coin_metrics)
