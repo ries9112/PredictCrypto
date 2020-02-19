@@ -1,5 +1,4 @@
 #'@importFrom RMySQL MySQL
-#'@export
 pullCryptoData <- function(tablenameQuery = c('Messari'), ...){
   con <-
     dbConnect(
