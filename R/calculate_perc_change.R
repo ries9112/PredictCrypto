@@ -5,41 +5,86 @@
 #'@importFrom dplyr rename
 #'@importFrom dplyr filter
 #'@export
-calculate_perc_change <- function (crypto_dataset, enterHours)
+calculate_perc_change <- function (crypto_dataset, units_offset, units=c('hours','days'))
 {
-  crypto_datasetHLater <- crypto_dataset
 
-  #create 24h offset
-  crypto_datasetHLater$DateTimeColoradoTimeMST <- crypto_datasetHLater$DateTimeColoradoTimeMST - lubridate::hours(enterHours)
+  if (units == 'hours'){
 
-  #replace pkDummy
-  crypto_datasetHLater$pkDummy <- substr(paste(as.POSIXct(crypto_datasetHLater$DateTimeColoradoTimeMST,format="%Y-%m-%d"), format(as.POSIXct(crypto_datasetHLater$DateTimeColoradoTimeMST,format="%H:%M:%S"),"%H")),1,13)
+    crypto_datasetHLater <- crypto_dataset
 
-  crypto_dataset$pkDummy <- substr(paste(as.POSIXct(crypto_dataset$DateTimeColoradoTimeMST,format="%Y-%m-%d"), format(as.POSIXct(crypto_dataset$DateTimeColoradoTimeMST,format="%H:%M:%S"),"%H")),1,13)
+    #create 24h offset
+    crypto_datasetHLater$DateTimeColoradoTimeMST <- crypto_datasetHLater$DateTimeColoradoTimeMST - lubridate::hours(units_offset)
 
-  crypto_dataset$pkey <- paste(crypto_dataset$pkDummy, crypto_dataset$Name)
+    #replace pkDummy
+    crypto_datasetHLater$pkDummy <- substr(paste(as.POSIXct(crypto_datasetHLater$DateTimeColoradoTimeMST,format="%Y-%m-%d"), format(as.POSIXct(crypto_datasetHLater$DateTimeColoradoTimeMST,format="%H:%M:%S"),"%H")),1,13)
 
-  crypto_datasetHLater$pkey <- paste(crypto_datasetHLater$pkDummy, crypto_datasetHLater$Name)
+    crypto_dataset$pkDummy <- substr(paste(as.POSIXct(crypto_dataset$DateTimeColoradoTimeMST,format="%Y-%m-%d"), format(as.POSIXct(crypto_dataset$DateTimeColoradoTimeMST,format="%H:%M:%S"),"%H")),1,13)
 
-  #re-adjust offset
-  crypto_datasetHLater$DateTimeColoradoTimeMST <- crypto_datasetHLater$DateTimeColoradoTimeMST + lubridate::hours(enterHours)
+    crypto_dataset$pkey <- paste(crypto_dataset$pkDummy, crypto_dataset$Name)
 
-  crypto_datasetHLater <- dplyr::select(crypto_datasetHLater, PriceUSD, pkey, DateTimeColoradoTimeMST) %>%
-    dplyr::rename(PriceUSD_x_hoursLater = PriceUSD, DateTimeColoradoTimeMST_x_hoursLater = DateTimeColoradoTimeMST)
+    crypto_datasetHLater$pkey <- paste(crypto_datasetHLater$pkDummy, crypto_datasetHLater$Name)
 
-  joinedDataset <- dplyr::left_join(crypto_dataset, crypto_datasetHLater, by = "pkey")
-  #joinedDataset <- filter(joinedDataset, joinedDataset$DateTimeColoradoTimeMST <=
-  #                          max(crypto_dataset$DateTimeColoradoTimeMST) - (24*60*60 )
+    #re-adjust offset
+    crypto_datasetHLater$DateTimeColoradoTimeMST <- crypto_datasetHLater$DateTimeColoradoTimeMST + lubridate::hours(units_offset)
 
-  joinedDataset$TargetPercChange <- ((joinedDataset$PriceUSD_x_hoursLater -
-                                        joinedDataset$PriceUSD)/joinedDataset$PriceUSD) * 100
+    crypto_datasetHLater <- dplyr::select(crypto_datasetHLater, PriceUSD, pkey, DateTimeColoradoTimeMST) %>%
+      dplyr::rename(PriceUSD_x_hoursLater = PriceUSD, DateTimeColoradoTimeMST_x_hoursLater = DateTimeColoradoTimeMST)
 
-  joinedDataset <- dplyr::select(joinedDataset, -1)
+    joinedDataset <- dplyr::left_join(crypto_dataset, crypto_datasetHLater, by = "pkey")
+    #joinedDataset <- filter(joinedDataset, joinedDataset$DateTimeColoradoTimeMST <=
+    #                          max(crypto_dataset$DateTimeColoradoTimeMST) - (24*60*60 )
 
-  return(joinedDataset %>% dplyr::filter(!is.na(TargetPercChange)))
-  #return(crypto_dataset)
+    joinedDataset$TargetPercChange <- ((joinedDataset$PriceUSD_x_hoursLater -
+                                          joinedDataset$PriceUSD)/joinedDataset$PriceUSD) * 100
+
+    joinedDataset <- dplyr::select(joinedDataset, -1)
+
+    return(joinedDataset %>% dplyr::filter(!is.na(TargetPercChange)))
+    #return(crypto_dataset)
+
+  }
+
+
+  else if (units == 'days'){
+
+    crypto_datasetHLater <- crypto_dataset
+
+    #create 24h offset
+    crypto_datasetHLater$DateTimeColoradoTimeMST <- crypto_datasetHLater$DateTimeColoradoTimeMST - lubridate::days(units_offset)
+
+    #replace pkDummy
+    crypto_datasetHLater$pkDummy <- substr(paste(as.POSIXct(crypto_datasetHLater$DateTimeColoradoTimeMST,format="%Y-%m-%d"), format(as.POSIXct(crypto_datasetHLater$DateTimeColoradoTimeMST,format="%H:%M:%S"),"%H")),1,13)
+
+    crypto_dataset$pkDummy <- substr(paste(as.POSIXct(crypto_dataset$DateTimeColoradoTimeMST,format="%Y-%m-%d"), format(as.POSIXct(crypto_dataset$DateTimeColoradoTimeMST,format="%H:%M:%S"),"%H")),1,13)
+
+    crypto_dataset$pkey <- paste(crypto_dataset$pkDummy, crypto_dataset$Name)
+
+    crypto_datasetHLater$pkey <- paste(crypto_datasetHLater$pkDummy, crypto_datasetHLater$Name)
+
+    #re-adjust offset
+    crypto_datasetHLater$DateTimeColoradoTimeMST <- crypto_datasetHLater$DateTimeColoradoTimeMST + lubridate::days(units_offset)
+
+    crypto_datasetHLater <- dplyr::select(crypto_datasetHLater, PriceUSD, pkey, DateTimeColoradoTimeMST) %>%
+      dplyr::rename(PriceUSD_x_hoursLater = PriceUSD, DateTimeColoradoTimeMST_x_hoursLater = DateTimeColoradoTimeMST)
+
+    joinedDataset <- dplyr::left_join(crypto_dataset, crypto_datasetHLater, by = "pkey")
+    #joinedDataset <- filter(joinedDataset, joinedDataset$DateTimeColoradoTimeMST <=
+    #                          max(crypto_dataset$DateTimeColoradoTimeMST) - (24*60*60 )
+
+    joinedDataset$TargetPercChange <- ((joinedDataset$PriceUSD_x_hoursLater -
+                                          joinedDataset$PriceUSD)/joinedDataset$PriceUSD) * 100
+
+    joinedDataset <- dplyr::select(joinedDataset, -1)
+
+    return(joinedDataset %>% dplyr::filter(!is.na(TargetPercChange)))
+    #return(crypto_dataset)
+
+  }
+
+
+
 }
 
-#### IMPORTANT NOTE FOR CODE ABOVE. RATHER THAN HAVING "XhoursLater", find a way to concat the string of the field name with the user input enterHours! Important, do it before tutorial is too far along!
+#### IMPORTANT NOTE FOR CODE ABOVE. RATHER THAN HAVING "XhoursLater", find a way to concat the string of the field name with the user input units_offset! Important, do it before tutorial is too far along!
 
 # remember to create a function just like this but pre-made for a 24 hour period called calculate_24hour_perc_change()
