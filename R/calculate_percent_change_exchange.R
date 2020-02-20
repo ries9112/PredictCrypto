@@ -5,7 +5,7 @@
 #'@importFrom dplyr rename
 #'@importFrom dplyr filter
 #'@export
-calculate_perc_change_exchange <- function (crypto_dataset, enterHours)
+calculate_percent_change_exchange <- function (crypto_dataset, enterHours)
 {
   crypto_datasetHLater <- crypto_dataset
 

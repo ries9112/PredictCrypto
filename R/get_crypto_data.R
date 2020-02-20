@@ -16,16 +16,18 @@ get_crypto_data <- function(){
   coin_metrics <- utils::type.convert(coin_metrics, as.is=TRUE)
   coin_metrics$date <- anytime(coin_metrics$date) # double << lets it be part of global environment from function
   ### MAKE DUMMY date_time FIELD FOR calulcate_percent_change()
-  coin_metrics$date_time <<- coin_metrics$date + lubridate::seconds(1)
+  coin_metrics$date_time <- coin_metrics$date + lubridate::seconds(1)
+  # return dataset
+  return(coin_metrics)
   ###
 
-  investing_dot_com_poloniex <- pin_get('investing-dot-com-poloniex','github')
-  investing_dot_com_poloniex <- utils::type.convert(investing_dot_com_poloniex, as.is=TRUE) # as.is keeps characters instead of factors
-  investing_dot_com_poloniex$date <- anytime(investing_dot_com_poloniex$date)
-  ### MAKE DUMMY date_time FIELD FOR calulcate_percent_change()
-  investing_dot_com_poloniex$date_time <<- investing_dot_com_poloniex$date + seconds(1)
+  # investing_dot_com_poloniex <- pin_get('investing-dot-com-poloniex','github')
+  # investing_dot_com_poloniex <- utils::type.convert(investing_dot_com_poloniex, as.is=TRUE) # as.is keeps characters instead of factors
+  # investing_dot_com_poloniex$date <- anytime(investing_dot_com_poloniex$date)
+  # ### MAKE DUMMY date_time FIELD FOR calulcate_percent_change()
+  # investing_dot_com_poloniex$date_time <- investing_dot_com_poloniex$date + seconds(1)
   ###
 
   #return(crypto_data)
-  print("The data frames 'coin_metrics' and 'investing_dot_com_poloniex' were successfully created inside your R session")
+  #print("The data frames 'coin_metrics' and 'investing_dot_com_poloniex' were successfully created inside your R session")
 }
