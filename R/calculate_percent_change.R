@@ -46,7 +46,7 @@ calculate_percent_change <- function (crypto_dataset, units_offset, units=c('hou
     joinedDataset$target_percent_change <- ((joinedDataset$price_usd_x_hoursLater -
                                           joinedDataset$price_usd)/joinedDataset$price_usd) * 100
 
-    joinedDataset <- dplyr::select(joinedDataset, -1)
+    #joinedDataset <- dplyr::select(joinedDataset, -1)
 
     return(joinedDataset %>% dplyr::filter(!is.na(target_percent_change)))
     #return(crypto_dataset)
@@ -83,7 +83,7 @@ calculate_percent_change <- function (crypto_dataset, units_offset, units=c('hou
     joinedDataset$target_percent_change <- ((joinedDataset$price_usd_x_hoursLater -
                                           joinedDataset$price_usd)/joinedDataset$price_usd) * 100
 
-    joinedDataset <- dplyr::select(joinedDataset, -1)
+    #joinedDataset <- dplyr::select(joinedDataset, -1)
 
     return(joinedDataset %>% dplyr::filter(!is.na(target_percent_change)))
     #return(crypto_dataset)
