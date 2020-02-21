@@ -64,18 +64,18 @@ tables_list <- dbListTables(database_connection)
 # Get Prices by exchange
 dbClearResult(dbListResults(database_connection)[[1]])
 
-query <- "SELECT Date as 'DateExtracted', DateTime as 'DateTimeColoradoTimeMST', Name, Price as 'PriceUSD', Exchange FROM ShrimpyPrices WHERE Date >= date_sub(now(), INTERVAL 31 DAY) AND Name != '' order by pkDummy desc"
+query <- "SELECT Date as 'DateExtracted', DateTime as 'DateTimeColoradoTimeMST', Name, Price as 'PriceUSD', Exchange FROM shrimpy_prices WHERE Date >= date_sub(now(), INTERVAL 31 DAY) AND Name != '' order by pkDummy desc"
 
 
-ShrimpyPrices <- dbFetch(dbSendQuery(database_connection, query), 750000)
+shrimpy_prices <- dbFetch(dbSendQuery(database_connection, query), 750000)
 
-# write.csv(ShrimpyPrices, 'data/ShrimpyPrices.csv')
+# write.csv(shrimpy_prices, 'data/shrimpy_prices.csv')
 
 library(pins)
 
 #pins::pin(cryptoData,board='github')
 
-pins::pin(ShrimpyPrices,board='github')
+pins::pin(shrimpy_prices,board='github')
 
 ```
 
