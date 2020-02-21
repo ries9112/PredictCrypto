@@ -4,6 +4,7 @@
 #'@importFrom dplyr select
 #'@importFrom dplyr rename
 #'@importFrom dplyr filter
+#'@importFrom magrittr %>%
 #'@export
 calculate_percent_change <- function (crypto_dataset, units_offset, units=c('hours','days'))
 {
@@ -42,6 +43,7 @@ calculate_percent_change <- function (crypto_dataset, units_offset, units=c('hou
     joinedDataset <- dplyr::left_join(crypto_dataset, crypto_datasetHLater, by = "pkey")
     #joinedDataset <- filter(joinedDataset, joinedDataset$date_time <=
     #                          max(crypto_dataset$date_time) - (24*60*60 )
+    joinedDataset <- joinedDataset %>% distinct(pkey, .keep_all = TRUE)
 
     joinedDataset$target_percent_change <- ((joinedDataset$price_usd_x_hoursLater -
                                           joinedDataset$price_usd)/joinedDataset$price_usd) * 100
@@ -79,6 +81,8 @@ calculate_percent_change <- function (crypto_dataset, units_offset, units=c('hou
     joinedDataset <- dplyr::left_join(crypto_dataset, crypto_datasetHLater, by = "pkey")
     #joinedDataset <- filter(joinedDataset, joinedDataset$date_time <=
     #                          max(crypto_dataset$date_time) - (24*60*60 )
+
+    joinedDataset <- joinedDataset %>% distinct(pkey, .keep_all = TRUE)
 
     joinedDataset$target_percent_change <- ((joinedDataset$date_time_x_daysLater -
                                           joinedDataset$price_usd)/joinedDataset$price_usd) * 100
