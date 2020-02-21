@@ -4,6 +4,7 @@
 #'@importFrom dplyr select
 #'@importFrom dplyr rename
 #'@importFrom dplyr filter
+#'@importFrom dplyr distinct
 #'@importFrom magrittr %>%
 #'@export
 calculate_percent_change <- function (crypto_dataset, units_offset, units=c('hours','days'))
