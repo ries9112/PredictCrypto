@@ -76,7 +76,7 @@ calculate_percent_change <- function (crypto_dataset, units_offset, units=c('hou
     crypto_datasetHLater$date_time <- crypto_datasetHLater$date_time + lubridate::days(units_offset)
 
     crypto_datasetHLater <- dplyr::select(crypto_datasetHLater, price_usd, pkey, date_time) %>%
-      dplyr::rename(date_time_x_daysLater = price_usd, date_time_x_daysLater = date_time)
+      dplyr::rename(price_usd_x_daysLater = price_usd, date_time_x_daysLater = date_time)
 
     joinedDataset <- dplyr::left_join(crypto_dataset, crypto_datasetHLater, by = "pkey")
     #joinedDataset <- filter(joinedDataset, joinedDataset$date_time <=
@@ -84,7 +84,7 @@ calculate_percent_change <- function (crypto_dataset, units_offset, units=c('hou
 
     joinedDataset <- joinedDataset %>% distinct(pkey, .keep_all = TRUE)
 
-    joinedDataset$target_percent_change <- ((joinedDataset$date_time_x_daysLater -
+    joinedDataset$target_percent_change <- ((joinedDataset$price_usd_x_daysLater -
                                           joinedDataset$price_usd)/joinedDataset$price_usd) * 100
 
     #joinedDataset <- dplyr::select(joinedDataset, -1)
