@@ -1,6 +1,3 @@
-on:
-  schedule:
-  - cron: "* * * * *"
 
 name: update-data
 
