@@ -23,7 +23,7 @@ library(RMySQL)
 library(dplyr)
 
 ############# SQL CONNECTION ###############
-Sys.setenv(user='tutorials', pswd='WebsiteTutorials',ipAddress='35.188.12.15')
+Sys.setenv(user='tutorials', pswd=pswd_secrets,ipAddress=ip_secrets)
 
 
 #Keep these steps disabled while developing but remember to un-comment these out!
@@ -71,7 +71,7 @@ ShrimpyPrices <- dbFetch(dbSendQuery(database_connection, query), 750000)
 
 library(pins)
 
-pins::pin(cryptoData,board='github')
+# pins::pin(cryptoData,board='github')
 
 pins::pin(ShrimpyPrices,board='github')
 
