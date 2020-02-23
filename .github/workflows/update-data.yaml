@@ -31,4 +31,4 @@ jobs:
       - name: Install package for ip address if need to allow a new one
         run: Rscript -e 'devtools::install_git("https://gitlab.com/hrbrmstr/myip")' -e 'devtools::install_github("r-dbi/RMySQL")'
       - name: Add credentials
-        run: Rscript -e 'myGithubToken <- "${{secrets.PREDICTCRYPTO_PINS}}"' -e 'rmarkdown::render("PullData.Rmd")'
+        run: Rscript -e 'myGithubToken <- "${{secrets.PREDICTCRYPTO_PINS}}"' -e 'rmarkdown::render("pull_data.Rmd")'
