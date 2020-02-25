@@ -27,6 +27,10 @@ crypto_data <- calculate_perc_change(crypto_data, 24, 'hours')
 
 ## Examples
 
+Calculate the % change over a 7 day period
+``` r
+crypto_data <- calculate_perc_change(crypto_data, 7, 'days')
+```
 
 ## To-do
 
