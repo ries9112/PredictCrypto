@@ -30,13 +30,13 @@ crypto_data <- calculate_perc_change(crypto_data, 24, 'hours')
 
 ## To-do
 
-* Setup CI to refresh data `cryptoData` that comes with the package hourly
+* Setup CI to refresh data `crypto_data` that comes with the package hourly
 
 * Document functions
 
-* Calculate target % change using BTC instead of USD
+* Calculate target % change using BTC
 
-* Create variable names based on hours chosen for % change calculation
+* Create variable names based on hours chosen for % change calculation using tidyeval
 
 * Create data by exchange made available through package
 
