@@ -22,7 +22,7 @@ crypto_data <- get_crypto_data()
 
 Calculate the % change over a certain number of hours
 ``` r
-crypto_data <- calculate_perc_change(crypto_data, 24)
+crypto_data <- calculate_perc_change(crypto_data, 24, 'hours')
 ```
 
 ## Examples
