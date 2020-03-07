@@ -2,6 +2,7 @@
 
 export(calculate_percent_change)
 export(calculate_percent_change_exchange)
+export(calculate_percent_change_second_version)
 export(get_crypto_data)
 export(get_data_investing_dot_com)
 importFrom(RMySQL,MySQL)

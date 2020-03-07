@@ -7,7 +7,7 @@
 #'@importFrom dplyr distinct
 #'@importFrom magrittr %>%
 #'@export
-calculate_percent_change <- function (crypto_dataset, price_field, date_time_field, units_offset, units=c('hours','days'))
+calculate_percent_change_second_version <- function (crypto_dataset, price_field, date_time_field, units_offset, units=c('hours','days'))
 {
   price_field <- enquo(price_field)
   date_time_field <- enquo(date_time_field)
