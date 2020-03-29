@@ -7,7 +7,7 @@
 #'@importFrom dplyr distinct
 #'@importFrom magrittr %>%
 #'@export
-calculate_percent_change_daily_version <- function (crypto_dataset, units_offset, units = c("hours", "days"))
+calculate_percent_change_daily_version2 <- function (crypto_dataset, units_offset, units = c("hours", "days"))
 {
   crypto_dataset$date_extracted <- anytime(crypto_dataset$date_extracted)
   if (units == "hours") {
