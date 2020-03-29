@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 Package: PredictCrypto
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
@@ -54,4 +53,3 @@ BugReports: https://github.com/ries9112/PredictCrypto/issues
 Suggests: 
     covr,
     testthat (>= 2.1.0)
->>>>>>> 68ce328d11f9acefc6870c150ecfbf2bff7580f1
