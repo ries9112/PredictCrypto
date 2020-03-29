@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Package: PredictCrypto
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
@@ -25,3 +26,32 @@ BugReports: https://github.com/ries9112/PredictCrypto/issues
 Suggests: 
     covr,
     testthat (>= 2.1.0)
+=======
+Package: PredictCrypto
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Riccardo",
+           family = "Esclapon",
+           role = c("aut", "cre"),
+           email = "ries9112@colorado.edu")
+Description: What the package does (one paragraph).
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.0.2
+Imports: 
+    anytime,
+    dplyr,
+    pins,
+    vroom,
+    lubridate,
+    safer,
+    magrittr,
+    RMariaDB
+URL: https://github.com/ries9112/PredictCrypto
+BugReports: https://github.com/ries9112/PredictCrypto/issues
+Suggests: 
+    covr,
+    testthat (>= 2.1.0)
+>>>>>>> 68ce328d11f9acefc6870c150ecfbf2bff7580f1

@@ -1,8 +1,8 @@
-#'@importFrom RMySQL MySQL
+#'@importFrom RMariaDB MariaDB
 pullCryptoData <- function(tablenameQuery = c('Messari'), ...){
   con <-
     dbConnect(
-      RMySQL::MySQL(),
+      RMariaDB::MariaDB(),
       username = Sys.getenv('user'),
       password = Sys.getenv('pswd'),
       host = Sys.getenv('ipAddress'),
