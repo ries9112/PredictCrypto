@@ -7,8 +7,9 @@ get_crypto_data <- function(){
   pins::board_register("https://raw.githubusercontent.com/predictcrypto/pins/master/",'messari')
 
   # download data
-  messari <<- pins::pin_get('messari','messari')
+  pins::pin_get('messari','messari')
+  #messari <<- pins::pin_get('messari','messari')
 
   # writeLines() instead of print() so I can use \n
-  writeLines(paste("Success. The cryptocurrency data is now available in the new object called 'messari'.\nThe most recent data is from:", toString(max(messari$DateTimeColoradoMST)), "(Colorado-MST timezone)."))
+  #writeLines(paste("Success. The cryptocurrency data is now available in the new object called 'messari'.\nThe most recent data is from:", toString(max(messari$DateTimeColoradoMST)), "(Colorado-MST timezone)."))
 }
