@@ -7,7 +7,7 @@ get_crypto_data <- function(){
   pins::board_register("https://raw.githubusercontent.com/predictcrypto/pins/master/",'messari')
 
   # download data
-  pins::pin_get('messari','messari')
+  return(pins::pin_get('messari','messari'))
   #messari <<- pins::pin_get('messari','messari')
 
   # writeLines() instead of print() so I can use \n
