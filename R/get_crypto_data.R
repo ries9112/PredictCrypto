@@ -1,33 +1,14 @@
-#'@importFrom pins board_register_github
+#'@importFrom pins board_register
 #'@importFrom pins pin_get
-#'@importFrom safer decrypt_string
-#'@importFrom anytime anytime
-#'@importFrom lubridate seconds
 #'@export
 get_crypto_data <- function(){
 
-  #FOR FINAL VERSION: FINAL VERSION SHOULD HAVE STALE DATA IN data/ FOLDER AND PULL DATA THAT IS UPDATED HOURLY LIKE THIS
-  # hourly uploads should be on Alteryx hourly to start and should move to cron jobs on cloud computer later
+  # register pins board
+  pins::board_register("https://raw.githubusercontent.com/predictcrypto/pins/master/",'messari')
 
-  pins::board_register_github(name = "github", repo = "predictcrypto/pins", branch = "master", token = paste0("b2ebaef07fa3d4abe316aed8a9608f4e7ca",  decrypt_string("KBQgbvYOq2IRVC16tdbn+esMMQ==","120"), "a4"))
+  # download data
+  messari <<- pins::pin_get('messari','messari')
 
-  # Pull data from board
-  coin_metrics <- pin_get('coin-metrics','github')
-  coin_metrics <- utils::type.convert(coin_metrics, as.is=TRUE)
-  coin_metrics$date <- anytime(coin_metrics$date) # double << lets it be part of global environment from function
-  ### MAKE DUMMY date_time FIELD FOR calulcate_percent_change()
-  coin_metrics$date_time <- coin_metrics$date + lubridate::seconds(1)
-  # return dataset
-  return(coin_metrics)
-  ###
-
-  # investing_dot_com_poloniex <- pin_get('investing-dot-com-poloniex','github')
-  # investing_dot_com_poloniex <- utils::type.convert(investing_dot_com_poloniex, as.is=TRUE) # as.is keeps characters instead of factors
-  # investing_dot_com_poloniex$date <- anytime(investing_dot_com_poloniex$date)
-  # ### MAKE DUMMY date_time FIELD FOR calulcate_percent_change()
-  # investing_dot_com_poloniex$date_time <- investing_dot_com_poloniex$date + seconds(1)
-  ###
-
-  #return(crypto_data)
-  #print("The data frames 'coin_metrics' and 'investing_dot_com_poloniex' were successfully created inside your R session")
+  # writeLines() instead of print() so I can use \n
+  writeLines(paste("Success. The cryptocurrency data is now available in the new object called 'messari'.\nThe most recent data is from:", toString(max(messari$DateTimeColoradoMST)), "(Colorado-MST timezone)."))
 }
