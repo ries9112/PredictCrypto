@@ -1,5 +1,6 @@
 #'@importFrom lubridate hours
 #'@importFrom dplyr rename
+#'@importFrom dplyr distinct
 #'@export
 calculate_price_change <- function(data, hours_later){ #would be better to take name/unique identifier from user too here
 
@@ -22,7 +23,10 @@ calculate_price_change <- function(data, hours_later){ #would be better to take 
   data_join <- rename(data_join, price_usd_24h_later = 'price_usd') # ADJUST FIELD NAME WITH TIDY EVAL
 
   # join data and overwrite old object
-  return(merge(x=data, y=data_join[, c('pkey', 'price_usd_24h_later')], by = 'pkey', all.x = T))
+  data_join <- merge(x=data, y=data_join[, c('pkey', 'price_usd_24h_later')], by = 'pkey', all.x = T)
+
+  # unique data
+  return(dplyr::distinct(data_join, pkey, .keep_all = T))
 }
 
 # Note 04/21: Remember to create new tests
