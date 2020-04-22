@@ -25,7 +25,7 @@ calculate_price_change <- function(data, hours_later){ #would be better to take 
   # join data and overwrite old object
   data_join <- merge(x=data, y=data_join[, c('pkey', 'price_usd_24h_later')], by = 'pkey', all.x = T)
 
-  # unique data
+  # unique data and return the result
   return(dplyr::distinct(data_join, pkey, .keep_all = T))
 }
 

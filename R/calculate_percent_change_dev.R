@@ -45,8 +45,9 @@ calculate_percent_change_dev <- function(data, hours_later){ #would be better to
   # remove price_usd_24h_later field to avoid target leak
   data_join <- dplyr::select(data_join, -'price_usd_24h_later')
 
-  # return the end result
-  return(data_join)
+  # unique data and return the result
+  return(dplyr::distinct(data_join, pkey, .keep_all = T))
+
 
 }
 
