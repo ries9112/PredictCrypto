@@ -9,6 +9,8 @@
 #'@export
 calculate_percent_change <- function (crypto_dataset, units_offset, units=c('hours','days'))
 {
+  # CHANGED TO NEW VERSION "calculate_percent_change_dev.R"
+
 
   # function demands the fields: "symbol", "price_usd" and "date_time_utc" to work!
   # Ideally make the user point these out directly using tidyeval

@@ -27,5 +27,3 @@ calculate_price_change <- function(data, hours_later){ #would be better to take 
 
 # Note 04/21: Remember to create new tests
 
-
-
