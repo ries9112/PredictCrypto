@@ -4,5 +4,5 @@ calculate_price_change_rowwise <- function(crypto_data, hours){ #would be better
   for (i in length(crypto_data)){
     crypto_data$data[[i]] <- PredictCrypto::calculate_price_change(crypto_data$data[[i]], hours)
   }
-
+  return(crypto_data)
 }
