@@ -10,9 +10,9 @@ cross_validate_crypto <- function(data, splits = 5) {
   # make new object
   quantiles <- data
   # create split
-  for (i in 1:nrow(crypto_data)) {
+  for (i in 1:nrow(data)) {
     quantiles$data[[i]] <-
-      crypto_data$data[[i]] %>%
+      data$data[[i]] %>%
       arrange(rank) %>%
       arrange(date_extracted) %>%
       mutate(split = ntile(date_extracted, splits))
@@ -20,7 +20,7 @@ cross_validate_crypto <- function(data, splits = 5) {
 
   # create train data with first 70% of dates
   quantiles_train <- quantiles
-  for (i in 1:nrow(crypto_data)) {
+  for (i in 1:nrow(data)) {
     quantiles_train$data[[i]] <- quantiles$data[[i]] %>%
       group_by(split) %>%
       mutate(training = 'train') %>%
@@ -29,7 +29,7 @@ cross_validate_crypto <- function(data, splits = 5) {
 
   # create test data with last 70% of dates
   quantiles_test <- quantiles
-  for (i in 1:nrow(crypto_data)) {
+  for (i in 1:nrow(data)) {
     quantiles_test$data[[i]] <- quantiles$data[[i]] %>%
       group_by(split) %>%
       mutate(training = 'test') %>%
