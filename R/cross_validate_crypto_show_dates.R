@@ -23,7 +23,7 @@ cross_validate_crypto_show_dates <- function(data, splits=5){
   quantiles_train <- quantiles
   for (i in 1:nrow(crypto_data)){
     quantiles_train$data[[i]] <- quantiles$data[[i]] %>%
-      group_by(split) %>% # Can I maybe resolve factor level issues adding the name field to this group by?
+      group_by(split) %>%
       mutate(training='train') %>%
       filter(date_extracted <= quantile(date_extracted, .7))
   }
