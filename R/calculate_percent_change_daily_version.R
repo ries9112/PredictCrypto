@@ -9,7 +9,6 @@
 #'@export
 calculate_percent_change_daily_version <- function (crypto_dataset, units_offset, units = c("hours", "days"))
 {
-  crypto_dataset$date_time_colorado_mst <- anytime(crypto_dataset$date_time_colorado_mst)
   if (units == "hours") {
     crypto_datasetHLater <- crypto_dataset
     crypto_datasetHLater$date_time_colorado_mst <- crypto_datasetHLater$date_time_colorado_mst -
