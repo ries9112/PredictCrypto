@@ -4,16 +4,15 @@
 #'@export
 crypto_data_join <- function(full_dataset, data_with_prices){
   # rename field
-  full_dataset$exchange_price <- full_dataset$Price
+  data_with_prices$exchange_price <- data_with_prices$Price
   # initialize crypto_data
   crypto_data <- data_with_prices
   # add pkey to full_dataset
-  full_dataset$pkey <- paste0(full_dataset$pkDummy, full_dataset$Name)
+  full_dataset$pkey <- paste0(full_dataset$pk_dummy, full_dataset$name)
   # add pkey to data_with_prices
-  data_with_prices$pkey <- paste0(data_with_prices$pk_dummy,
-                                           data_with_prices$name)
+  data_with_prices$pkey <- paste0(data_with_prices$pkDummy, data_with_prices$Name)
   # merge the two
-  crypto_data <- merge(x = data_with_prices, y = full_dataset[, c("pkey","exchange_price")], by = "pkey", all.x = T)
+  crypto_data <- merge(x = full_dataset, y = data_with_prices[, c("pkey","exchange_price")], by = "pkey", all.x = T)
   # make tweaks to the result
   crypto_data <- crypto_data %>% select(-"price_usd") %>% rename(price_usd = "exchange_price") %>%
     subset(price_usd > 0)  #rename so don't need to adjust formula
