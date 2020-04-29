@@ -1,7 +1,6 @@
 #'@importFrom magrittr  %>%
 #'@importFrom dplyr  select
 #'@importFrom dplyr  rename
-#'@importFrom dplyr  subset
 #'@export
 crypto_data_join <- function(full_dataset, data_with_prices){
   # rename field
