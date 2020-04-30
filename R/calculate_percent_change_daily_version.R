@@ -37,7 +37,7 @@ calculate_percent_change_daily_version <- function (crypto_dataset, units_offset
       100
     joinedDataset <- dplyr::select(joinedDataset, -price_usd_x_hoursLater,
                                    -date_time_utc_x_hoursLater)
-    return(joinedDataset %>% dplyr::filter(!is.na(target_percent_change)))
+    return(joinedDataset %>% dplyr::filter(!is.na(target_percent_change)) %>% select(-name.y) %>% rename(name="name.x"))
   }
   else if (units == "days") {
     crypto_datasetHLater <- crypto_dataset
