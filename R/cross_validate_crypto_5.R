@@ -7,6 +7,8 @@
 #'@importFrom dplyr bind_rows
 #'@export
 cross_validate_crypto_5 <- function (data) {
+  # This version is meant for 5 cv folds only
+  folds = 5
   #Setup for loop
   # Turn number of folds into a percentage. 5 = 50% (each fold uses this much of total data)
   folds_percentile = 1-(folds/10)
