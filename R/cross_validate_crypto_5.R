@@ -65,7 +65,8 @@ cross_validate_crypto_5 <- function (data) {
     fold1_data_test$training <- 'holdout'
     fold1_data_test$split <- 1
     # Remove the 30% that went to test from the total data
-    all_data <- complete_data[complete_data$date_time_colorado_mst < min(fold1_data_test$date_time_colorado_mst),]
+    all_data <- complete_data$data[[i]][complete_data$data[[i]]$date_time_colorado_mst < min(fold1_data_test$date_time_colorado_mst),]
+    print(i)
     # Take new most recent 50% of all data
     fold2_data <- all_data[all_data$date_time_colorado_mst >= toString(quantile(all_data$date_time_colorado_mst, folds_percentile)),]
     # Create train/test split 70/30 for current data
@@ -77,8 +78,7 @@ cross_validate_crypto_5 <- function (data) {
     fold2_data_test$training <- 'test'
     fold2_data_test$split <- 2
     # Remove the 30% that went to test from the total data
-    all_data <- complete_data[complete_data$date_time_colorado_mst < min(fold2_data_test$date_time_colorado_mst),]
-
+    all_data <- complete_data$data[[i]][complete_data$data[[i]]$date_time_colorado_mst < min(fold2_data_test$date_time_colorado_mst),]
     # third fold:
     # Take new most recent 50% of all data
     fold3_data <- all_data[all_data$date_time_colorado_mst >= toString(quantile(all_data$date_time_colorado_mst, folds_percentile)),]
@@ -91,7 +91,7 @@ cross_validate_crypto_5 <- function (data) {
     fold3_data_test$training <- 'test'
     fold3_data_test$split <- 3
     # Remove the 30% that went to test from the total data
-    all_data <- complete_data[complete_data$date_time_colorado_mst < min(fold3_data_test$date_time_colorado_mst),]
+    all_data <- complete_data$data[[i]][complete_data$data[[i]]$date_time_colorado_mst < min(fold3_data_test$date_time_colorado_mst),]
 
     # fourth fold:
     # Take new most recent 50% of all data
@@ -105,7 +105,7 @@ cross_validate_crypto_5 <- function (data) {
     fold4_data_test$training <- 'test'
     fold4_data_test$split <- 4
     # Remove the 30% that went to test from the total data
-    all_data <- complete_data[complete_data$date_time_colorado_mst < min(fold4_data_test$date_time_colorado_mst),]
+    all_data <- complete_data$data[[i]][complete_data$data[[i]]$date_time_colorado_mst < min(fold4_data_test$date_time_colorado_mst),]
 
     # Fifth fold:
     # Take new most recent 50% of all data
@@ -119,7 +119,7 @@ cross_validate_crypto_5 <- function (data) {
     fold5_data_test$training <- 'test'
     fold5_data_test$split <- 5
     # Remove the 30% that went to test from the total data
-    all_data <- complete_data[complete_data$date_time_colorado_mst < min(fold5_data_test$date_time_colorado_mst),]
+    all_data <- complete_data$data[[i]][complete_data$data[[i]]$date_time_colorado_mst < min(fold5_data_test$date_time_colorado_mst),]
 
     # new data
     new_data$data[[i]] <- rbind(fold1_data_train, fold1_data_test, fold2_data_train, fold2_data_test,
