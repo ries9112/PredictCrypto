@@ -58,11 +58,11 @@ cross_validate_crypto_5 <- function (data) {
     # Create train/test split 70/30 for current data
     fold1_data_train <- fold1_data[fold1_data$date_time_colorado_mst < toString(quantile(fold1_data$date_time_colorado_mst, 0.7)),]
     fold1_data_train$training <- 'train'
-    fold1_data_train$split <- 1
+    fold1_data_train$split <- 5
     # same for test
     fold1_data_test <- fold1_data[fold1_data$date_time_colorado_mst >= toString(quantile(fold1_data$date_time_colorado_mst, 0.7)),]
-    fold1_data_test$training <- 'test'
-    fold1_data_test$split <- 1
+    fold1_data_test$training <- 'holdout'
+    fold1_data_test$split <- 5
     # Remove the 30% that went to test from the total data
     all_data <- all_data[all_data$date_time_colorado_mst < min(fold1_data_test$date_time_colorado_mst),]
     # Take new most recent 50% of all data
@@ -70,11 +70,11 @@ cross_validate_crypto_5 <- function (data) {
     # Create train/test split 70/30 for current data
     fold2_data_train <- fold2_data[fold2_data$date_time_colorado_mst < toString(quantile(fold2_data$date_time_colorado_mst, 0.7)),]
     fold2_data_train$training <- 'train'
-    fold2_data_train$split <- 2
+    fold2_data_train$split <- 4
     # same for test
     fold2_data_test <- fold2_data[fold2_data$date_time_colorado_mst >= toString(quantile(fold2_data$date_time_colorado_mst, 0.7)),]
     fold2_data_test$training <- 'test'
-    fold2_data_test$split <- 2
+    fold2_data_test$split <- 4
     # Remove the 30% that went to test from the total data
     all_data <- all_data[all_data$date_time_colorado_mst < min(fold2_data_test$date_time_colorado_mst),]
 
@@ -90,7 +90,7 @@ cross_validate_crypto_5 <- function (data) {
     fold3_data_test$training <- 'test'
     fold3_data_test$split <- 3
     # Remove the 30% that went to test from the total data
-    all_data <- all_data[all_data$date_time_colorado_mst < min(fold2_data_test$date_time_colorado_mst),]
+    all_data <- all_data[all_data$date_time_colorado_mst < min(fold3_data_test$date_time_colorado_mst),]
 
     # fourth fold:
     # Take new most recent 50% of all data
@@ -98,13 +98,13 @@ cross_validate_crypto_5 <- function (data) {
     # Create train/test split 70/30 for current data
     fold4_data_train <- fold4_data[fold4_data$date_time_colorado_mst < toString(quantile(fold4_data$date_time_colorado_mst, 0.7)),]
     fold4_data_train$training <- 'train'
-    fold4_data_train$split <- 4
+    fold4_data_train$split <- 2
     # same for test
     fold4_data_test <- fold4_data[fold4_data$date_time_colorado_mst >= toString(quantile(fold4_data$date_time_colorado_mst, 0.7)),]
     fold4_data_test$training <- 'test'
-    fold4_data_test$split <- 4
+    fold4_data_test$split <- 2
     # Remove the 30% that went to test from the total data
-    all_data <- all_data[all_data$date_time_colorado_mst < min(fold2_data_test$date_time_colorado_mst),]
+    all_data <- all_data[all_data$date_time_colorado_mst < min(fold4_data_test$date_time_colorado_mst),]
 
     # Fifth fold:
     # Take new most recent 50% of all data
@@ -112,13 +112,13 @@ cross_validate_crypto_5 <- function (data) {
     # Create train/test split 70/30 for current data
     fold5_data_train <- fold5_data[fold5_data$date_time_colorado_mst < toString(quantile(fold5_data$date_time_colorado_mst, 0.7)),]
     fold5_data_train$training <- 'train'
-    fold5_data_train$split <- 5
+    fold5_data_train$split <- 1
     # same for test
     fold5_data_test <- fold5_data[fold5_data$date_time_colorado_mst >= toString(quantile(fold5_data$date_time_colorado_mst, 0.7)),]
     fold5_data_test$training <- 'test'
-    fold5_data_test$split <- 5
+    fold5_data_test$split <- 1
     # Remove the 30% that went to test from the total data
-    all_data <- all_data[all_data$date_time_colorado_mst < min(fold2_data_test$date_time_colorado_mst),]
+    all_data <- all_data[all_data$date_time_colorado_mst < min(fold5_data_test$date_time_colorado_mst),]
 
     # new data
     new_data$data[[i]] <- rbind(fold1_data_train, fold1_data_test, fold2_data_train, fold2_data_test,
