@@ -54,14 +54,14 @@ cross_validate_crypto_5_more_data <- function (data) {
     all_data <- data$data[[i]]
     # 05/04 updates:
     # find number of rows to remove each split
-    rows_to_remove <- as.integer(nrow(all_data) - nrow(all_data)/5*0.2) # remove 20% test/holdout each time
+    rows_to_remove <- as.integer(nrow(all_data) - nrow(all_data)/5)*0.2 # remove 20% test/holdout each time
     # find number of rows for each split (arrange + head). Take 4/5ths of data each time.
     rows_split <- as.integer(nrow(all_data) - nrow(all_data)/5)
 
     # One at a time:
     #print(i)
     # Take most recent data
-    fold1_data <- head(arrange(all_data, desc(date_time_colorado_mst)), rows_split)
+    fold1_data <- head(all_data, rows_split)
     #old:fold1_data <- all_data[all_data$date_time_colorado_mst >= toString(quantile(all_data$date_time_colorado_mst, 0.3)),]
     # Create train/test split 80/20 for current data
     fold1_data_train <- fold1_data[fold1_data$date_time_colorado_mst < toString(quantile(fold1_data$date_time_colorado_mst, 0.8)),]
@@ -74,7 +74,7 @@ cross_validate_crypto_5_more_data <- function (data) {
     # Remove the 30% that went to test from the total data
     all_data <- complete_data$data[[i]][complete_data$data[[i]]$date_time_colorado_mst < min(fold1_data_test$date_time_colorado_mst),]
     # Take new most recent data
-    fold2_data <- head(arrange(all_data, desc(date_time_colorado_mst)), rows_split)
+    fold2_data <- head(all_data, rows_split)
     # Create train/test split 80/20 for current data
     fold2_data_train <- fold2_data[fold2_data$date_time_colorado_mst < toString(quantile(fold2_data$date_time_colorado_mst, 0.8)),]
     fold2_data_train$training <- 'train'
@@ -87,7 +87,7 @@ cross_validate_crypto_5_more_data <- function (data) {
     all_data <- complete_data$data[[i]][complete_data$data[[i]]$date_time_colorado_mst < min(fold2_data_test$date_time_colorado_mst),]
     # third fold:
     # Take new most recent data
-    fold3_data <- head(arrange(all_data, desc(date_time_colorado_mst)), rows_split)
+    fold3_data <- head(all_data, rows_split)
     # Create train/test split 80/20 for current data
     fold3_data_train <- fold3_data[fold3_data$date_time_colorado_mst < toString(quantile(fold3_data$date_time_colorado_mst, 0.8)),]
     fold3_data_train$training <- 'train'
@@ -101,7 +101,7 @@ cross_validate_crypto_5_more_data <- function (data) {
 
     # fourth fold:
     # Take new most recent data
-    fold4_data <- head(arrange(all_data, desc(date_time_colorado_mst)), rows_split)
+    fold4_data <- head(all_data, rows_split)
     # Create train/test split 80/20 for current data
     fold4_data_train <- fold4_data[fold4_data$date_time_colorado_mst < toString(quantile(fold4_data$date_time_colorado_mst, 0.8)),]
     fold4_data_train$training <- 'train'
@@ -115,7 +115,7 @@ cross_validate_crypto_5_more_data <- function (data) {
 
     # Fifth fold:
     # Take new most recent data
-    fold5_data <- head(arrange(all_data, desc(date_time_colorado_mst)), rows_split)
+    fold5_data <- head(all_data, rows_split)
     # Create train/test split 80/20 for current data
     fold5_data_train <- fold5_data[fold5_data$date_time_colorado_mst < toString(quantile(fold5_data$date_time_colorado_mst, 0.8)),]
     fold5_data_train$training <- 'train'
