@@ -55,8 +55,8 @@ cross_validate_crypto_5 <- function (data) {
     # 05/04 updates:
     # find number of rows to remove each split
     rows_to_remove <- as.integer(nrow(all_data) - nrow(all_data)/5*0.2) # remove 20% test/holdout each time
-    # find number of rows for each split (arrange + head). Take 4/5ths of data each time.
-    rows_split <- as.integer(nrow(all_data) - nrow(all_data)/5)
+    # find number of rows for each split (arrange + head). Take half of the data each time.
+    rows_split <- as.integer(nrow(all_data)/2)
 
     # One at a time:
     #print(i)
