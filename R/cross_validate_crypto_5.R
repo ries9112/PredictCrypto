@@ -6,7 +6,7 @@
 #'@importFrom dplyr filter
 #'@importFrom dplyr bind_rows
 #'@export
-cross_validate_crypto_5_more_data <- function (data) {
+cross_validate_crypto_5 <- function (data) {
   # This version is meant for 5 cv folds only
   folds = 5
   #Setup for loop
