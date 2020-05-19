@@ -4,7 +4,7 @@
 get_crypto_data_reprex <- function(){
 
   # register pins board
-  pins::board_register("https://raw.githubusercontent.com/predictcrypto/pins/master/",'messari_reprex')
+  pins::board_register("https://raw.githubusercontent.com/ries9112/pins-1/master/",'messari_reprex')
 
   # download data
   return(pins::pin_get('messari_reprex','messari_reprex'))
