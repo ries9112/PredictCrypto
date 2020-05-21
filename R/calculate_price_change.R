@@ -11,7 +11,7 @@ calculate_price_change <- function(data, hours_later){ #would be better to take 
   data_join <- data
 
   # adjust by x hours
-  data_join$date_time_colorado_mst <- data_join$date_time_colorado_mst + lubridate::hours(hours_later)
+  data_join$date_time_colorado_mst <- data_join$date_time_colorado_mst - lubridate::hours(hours_later)
 
   # make adjusted pk_dummy
   data_join$pk_dummy <- substr(data_join$date_time_colorado_mst, 1, 13)
