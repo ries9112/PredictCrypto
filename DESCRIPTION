@@ -16,7 +16,6 @@ Imports:
     dplyr,
     pins,
     lubridate,
-    safer,
     magrittr
 URL: https://github.com/ries9112/PredictCrypto
 BugReports: https://github.com/ries9112/PredictCrypto/issues
