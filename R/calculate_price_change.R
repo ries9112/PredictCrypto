@@ -17,7 +17,7 @@ calculate_price_change <- function(data, hours_later){ #would be better to take 
   data_join$pk_dummy <- substr(data_join$date_time_colorado_mst, 1, 13)
 
   # make adjusted pkey
-  data_join$pkey <- paste0(data$pk_dummy, data$name)
+  data_join$pkey <- paste0(data_join$pk_dummy, data_join$name)
 
   # rename new offsetprice_usd field
   data_join <- rename(data_join, price_usd_24h_later = 'price_usd') # ADJUST FIELD NAME WITH TIDY EVAL
