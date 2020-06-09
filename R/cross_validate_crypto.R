@@ -1,8 +1,11 @@
 #'@importFrom magrittr %>%
 #'@importFrom dplyr mutate
 #'@importFrom dplyr ntile
+#'@importFrom dplyr group_by
 #'@export
 cross_validate_crypto <- function(data, splits = 5) {
+  # make sure data is correctly grouped by name and exchange
+  data <- dplyr::group_by(data, name, exchange)
   # for the first split, start by taking most recent 60% of the data
   split_one <- data[dplyr::ntile(data$date_time_colorado_mst, 10) > 4,]
   # still first split, take 80/20 split for train and test
@@ -20,7 +23,7 @@ cross_validate_crypto <- function(data, splits = 5) {
   # start by taking train from first split (which naturally excludes test)
   split_two <- split_one_train
   # now add number of rows determined earlier
-  split_two <- union(dplyr::mutate(head(data[data$date_time_colorado_mst < split_one_min_datetime,], rows_per_split), training='train'), split_two)
+  split_two <- union(dplyr::mutate(tail(data[data$date_time_colorado_mst < split_one_min_datetime,], rows_per_split), training='train'), split_two)
   # now make the latest 20% into test
   split_two_test <- split_two[dplyr::ntile(split_two$date_time_colorado_mst, 10) > 8,] %>% dplyr::mutate(training='test')
   # remove latest 20% of data
@@ -31,7 +34,7 @@ cross_validate_crypto <- function(data, splits = 5) {
   # now third split
   split_three <- split_two[dplyr::ntile(split_two$date_time_colorado_mst, 10) <= 8,]
   # now add number of rows determined earlier
-  split_three <- union(dplyr::mutate(head(data[data$date_time_colorado_mst < min(split_two$date_time_colorado_mst),], rows_per_split), training='train'), split_three)
+  split_three <- union(dplyr::mutate(tail(data[data$date_time_colorado_mst < min(split_two$date_time_colorado_mst),], rows_per_split), training='train'), split_three)
   # now make the latest 20% into test
   split_three_test <- split_three[dplyr::ntile(split_three$date_time_colorado_mst, 10) > 8,] %>% dplyr::mutate(training='test')
   # remove latest 20% of data
@@ -42,7 +45,7 @@ cross_validate_crypto <- function(data, splits = 5) {
   # now fourth split
   split_four <- split_three[dplyr::ntile(split_three$date_time_colorado_mst, 10) <= 8,]
   # now add number of rows determined earlier
-  split_four <- union(dplyr::mutate(head(data[data$date_time_colorado_mst < min(split_three$date_time_colorado_mst),], rows_per_split), training='train'), split_four)
+  split_four <- union(dplyr::mutate(tail(data[data$date_time_colorado_mst < min(split_three$date_time_colorado_mst),], rows_per_split), training='train'), split_four)
   # now make the latest 20% into test
   split_four_test <- split_four[dplyr::ntile(split_four$date_time_colorado_mst, 10) > 8,] %>% dplyr::mutate(training='test')
   # remove latest 20% of data
@@ -53,7 +56,7 @@ cross_validate_crypto <- function(data, splits = 5) {
   # now fifth split
   split_five <- split_four[dplyr::ntile(split_four$date_time_colorado_mst, 10) <= 8,]
   # now add number of rows determined earlier
-  split_five <- union(dplyr::mutate(head(data[data$date_time_colorado_mst < min(split_four$date_time_colorado_mst),], rows_per_split), training='train'), split_five)
+  split_five <- union(dplyr::mutate(tail(data[data$date_time_colorado_mst < min(split_four$date_time_colorado_mst),], rows_per_split), training='train'), split_five)
   # now make the latest 20% into test
   split_five_test <- split_five[dplyr::ntile(split_five$date_time_colorado_mst, 10) > 8,] %>% dplyr::mutate(training='test')
   # remove latest 20% of data
@@ -78,7 +81,4 @@ cross_validate_crypto <- function(data, splits = 5) {
   # return the end result
   return(finalized_data)
 }
-
-#NOTES: STILL HARDCODED FOR 5 FOLDS! For loop responsive to changes should be doable
-
 
