@@ -1,5 +1,5 @@
 #'@importFrom magrittr %>%
-#'@importFrom dplyr dplyr::mutate
+#'@importFrom dplyr mutate
 #'@importFrom dplyr ntile
 cross_validate_crypto <- function(data, splits = 5) {
   # for the first split, start by taking most recent 60% of the data
