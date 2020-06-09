@@ -12,16 +12,15 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0
 Imports: 
-    RMySQL,
     anytime,
     dplyr,
     pins,
-    vroom,
     lubridate,
-    safer,
     magrittr
 URL: https://github.com/ries9112/PredictCrypto
 BugReports: https://github.com/ries9112/PredictCrypto/issues
 Suggests: 
     covr,
     testthat (>= 2.1.0)
+Depends: 
+    R (>= 2.10)
