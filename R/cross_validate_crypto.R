@@ -1,6 +1,7 @@
 #'@importFrom magrittr %>%
 #'@importFrom dplyr mutate
 #'@importFrom dplyr ntile
+#'@export
 cross_validate_crypto <- function(data, splits = 5) {
   # for the first split, start by taking most recent 60% of the data
   split_one <- data[dplyr::ntile(data$date_time_colorado_mst, 10) > 4,]
@@ -73,8 +74,11 @@ cross_validate_crypto <- function(data, splits = 5) {
     dplyr::union(split_three) %>%
     dplyr::union(split_four) %>%
     dplyr::union(split_five)
+
+  # return the end result
+  return(finalized_data)
 }
 
-#NOTES: STILL HARDCODED FOR 5 FOLDS!
+#NOTES: STILL HARDCODED FOR 5 FOLDS! For loop responsive to changes should be doable
 
 
