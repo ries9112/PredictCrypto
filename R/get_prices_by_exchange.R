@@ -7,7 +7,7 @@ get_prices_by_exchange <- function(){
   pins::board_register("https://raw.githubusercontent.com/predictcrypto/pins/master/",'prices')
 
   # download data
-  return(pins::pin_get('shrimpy_prices','prices'))
+  return(pins::pin_get('shrimpy_orderbooks','prices'))
   #messari <<- pins::pin_get('messari','messari')
 
   # writeLines() instead of print() so I can use \n
