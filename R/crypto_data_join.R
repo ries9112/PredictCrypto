@@ -15,7 +15,7 @@ crypto_data_join <- function(full_dataset, data_with_prices){
   # merge the two
   crypto_data <- merge(x = full_dataset, y = data_with_prices[, c("pkey","buy_price_low_ask","sell_price_high_bid", "Exchange")], by = "pkey", all.x = T)
   # make tweaks to the result
-  crypto_data <- crypto_data %>% subset(buy_price_low_ask > 0)
+  crypto_data <- crypto_data %>% rename(exchange='Exchange') %>% subset(buy_price_low_ask > 0)
   crypto_data <- crypto_data %>% subset(sell_price_high_bid > 0)
   # return crypto_data
   return(crypto_data)

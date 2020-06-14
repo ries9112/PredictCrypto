@@ -19,14 +19,17 @@ calculate_price_change <- function(data, hours_later){ #would be better to take 
   # make adjusted pkey
   data_join$pkey <- paste0(data_join$pk_dummy, data_join$name)
 
-  # rename new offsetprice_usd field
-  data_join <- rename(data_join, price_usd_24h_later = 'price_usd') # ADJUST FIELD NAME WITH TIDY EVAL
+  # rename new offset price_usd field (only sell price needed)
+  data_join <- rename(data_join, sell_price_usd_24h_later = 'sell_price_high_bid') # ADJUST FIELD NAME WITH TIDY EVAL
 
   # join data and overwrite old object
-  data_join <- merge(x=data, y=data_join[, c('pkey', 'price_usd_24h_later')], by = 'pkey', all.x = T)
+  data_join <- merge(x=data, y=data_join[, c('pkey', 'sell_price_usd_24h_later')], by = 'pkey', all.x = T)
 
   # remove rows without target
-  data_join <- data_join[complete.cases(data_join[,'price_usd_24h_later']),]
+  data_join <- data_join[complete.cases(data_join[,'sell_price_usd_24h_later']),]
+
+  # adjust pkey by exchange
+  data_join$pkey <- paste0(data_join$pkey, data_join$exchange)
 
   # unique data and return the result
   return(dplyr::distinct(data_join, pkey, .keep_all = T))
