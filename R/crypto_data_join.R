@@ -1,6 +1,7 @@
 #'@importFrom magrittr  %>%
 #'@importFrom dplyr  select
 #'@importFrom dplyr  rename
+#'@importFrom anytime anytime
 #'@export
 crypto_data_join <- function(full_dataset, data_with_prices){
   # rename fields
@@ -10,6 +11,10 @@ crypto_data_join <- function(full_dataset, data_with_prices){
   crypto_data <- data_with_prices
   # add pkey to full_dataset
   full_dataset$pkey <- paste0(full_dataset$pk_dummy, full_dataset$name)
+  # offset data_with_prices pkDummy. First convert UTC to Denver MDT time:
+  data_with_prices$date_time_utc <- format(as.POSIXct(data_with_prices$date_time_utc, tz='GMT'), tz='America/Denver', usetz=T)
+  # new pkDummy
+  data_with_prices$pkDummy <- substr(data_with_prices$date_time_utc, 1, 13)
   # add pkey to data_with_prices
   data_with_prices$pkey <- paste0(data_with_prices$pkDummy, data_with_prices$Name)
   # merge the two
