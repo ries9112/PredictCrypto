@@ -1,6 +1,5 @@
 #'@importFrom pins board_register
 #'@importFrom pins pin_get
-#'@export
 get_crypto_data <- function(){
 
   # register pins board
