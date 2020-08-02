@@ -14,11 +14,12 @@ install_github("ries9112/PredictCrypto")
 ```
 
 ## Usage
-
+<!--- UPDATE THIS
 Create a new dataset with cryptocurrency data
 ``` r
 crypto_data <- get_crypto_data()
 ```
+-->
 
 Calculate the % change over a certain number of hours
 ``` r
