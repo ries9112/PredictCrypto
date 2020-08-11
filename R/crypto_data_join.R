@@ -4,19 +4,15 @@
 #'@importFrom anytime anytime
 #'@export
 crypto_data_join <- function(full_dataset, data_with_prices){
-  # rename fields
+  # resymbol fields
   data_with_prices$buy_price_low_ask <- data_with_prices$lowest_ask_1_price_usd
   data_with_prices$sell_price_high_bid <- data_with_prices$highest_bid_1_price_usd
   # initialize crypto_data
   crypto_data <- data_with_prices
   # add pkey to full_dataset
-  full_dataset$pkey <- paste0(full_dataset$pk_dummy, full_dataset$name)
-  # offset data_with_prices pkDummy. First convert UTC to Denver MDT time:
-  data_with_prices$date_time_utc <- format(as.POSIXct(data_with_prices$date_time_utc, tz='GMT'), tz='America/Denver', usetz=T)
-  # new pkDummy
-  data_with_prices$pkDummy <- substr(data_with_prices$date_time_utc, 1, 13)
+  full_dataset$pkey <- paste0(full_dataset$pkDummy, full_dataset$symbol)
   # add pkey to data_with_prices
-  data_with_prices$pkey <- paste0(data_with_prices$pkDummy, data_with_prices$Name)
+  data_with_prices$pkey <- paste0(data_with_prices$pkDummy, data_with_prices$Symbol)
   # merge the two
   crypto_data <- merge(x = full_dataset, y = data_with_prices[, c("pkey","buy_price_low_ask","sell_price_high_bid", "Exchange")], by = "pkey", all.x = T)
   # make tweaks to the result
