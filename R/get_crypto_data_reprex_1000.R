@@ -3,12 +3,12 @@
 #'@importFrom janitor clean_names
 #'@importFrom anytime anytime
 #'@export
-get_crypto_data_reprex <- function(){
+get_crypto_data_reprex_1000 <- function(){
 
   # register pins board
-  pins::board_register("https://raw.githubusercontent.com/predictcrypto/pins/master/",'reprex_bitgur_ETH')
+  pins::board_register("https://raw.githubusercontent.com/predictcrypto/pins/master/",'reprex_bitgur_1000')
   # convert names to snake_case
-  reprex_data <- janitor::clean_names(pins::pin_get('reprex_bitgur_ETH','reprex_bitgur_ETH'))
+  reprex_data <- janitor::clean_names(pins::pin_get('reprex_bitgur_1000','reprex_bitgur_1000'))
   # convert date/time
   reprex_data$date <- as.Date(substr(reprex_data$date,1,10), '%Y-%m-%d')
   # adjust date_time to utc (seems to offset things incorrectly)
