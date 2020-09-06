@@ -1,45 +1,80 @@
 #'@importFrom lubridate hours
 #'@importFrom dplyr rename
-#'@importFrom dplyr distinct
-#'@importFrom dplyr mutate
+#'@importFrom anytime anytime
+#'@importFrom lubridate hours
+#'@importFrom dplyr left_join
 #'@importFrom dplyr select
+#'@importFrom dplyr rename
+#'@importFrom dplyr filter
+#'@importFrom dplyr distinct
+#'@importFrom magrittr %>%
 #'@export
-calculate_percent_change_new <- function(data, hours_later){ #would be better to take name/unique identifier from user too here
+calculate_percent_change_new <- function (crypto_dataset, units_offset, units = c("hours", "days"))
+{
+  crypto_dataset$date_time_utc <- anytime(crypto_dataset$date_time_utc)
 
-  # make pkey for join
-  data$pkey <- paste0(data$pkDummy, data$name)
-
-  # new object for join offset
-  data_join <- data
-
-  # adjust by x hours
-  data_join$date_time_utc <- data_join$date_time_utc - lubridate::hours(hours_later)
-
-  # make adjusted pkDummy
-  data_join$pkDummy <- substr(data_join$date_time_utc, 1, 13)
-
-  # make adjusted pkey
-  data_join$pkey <- paste0(data_join$pkDummy, data_join$name)
-
-  # rename new offset price_usd field (only sell price needed)
-  data_join <- rename(data_join, sell_price_usd_24h_later = 'sell_price_high_bid') # ADJUST FIELD NAME WITH TIDY EVAL
-
-  # join data and overwrite old object
-  data_join <- merge(x=data, y=data_join[, c('pkey', 'sell_price_usd_24h_later')], by = 'pkey', all.x = T)
-
-  # remove rows without target
-  data_join <- data_join[complete.cases(data_join[,'sell_price_usd_24h_later']),]
-
-  # calculate % change
-  data_join <- mutate(data_join, perc_change_24h_sell_price = ((sell_price_usd_24h_later - sell_price_high_bid)/sell_price_high_bid)*100)
-
-  # Remove sell_price_usd_24h_later
-  data_join <- select(data_join, -sell_price_usd_24h_later)
-
-  # adjust pkey by exchange
-  data_join$pkey <- paste0(data_join$pkey, data_join$exchange)
-
-  # unique data and return the result
-  return(dplyr::distinct(data_join, pkey, .keep_all = T))
+  if (units == "hours") {
+    crypto_datasetHLater <- crypto_dataset
+    crypto_datasetHLater$date_time_utc <- crypto_datasetHLater$date_time_utc -
+      lubridate::hours(units_offset)
+    crypto_datasetHLater$pk_dummy <- substr(paste(as.POSIXct(crypto_datasetHLater$date_time_utc,
+                                                             format = "%Y-%m-%d"), format(as.POSIXct(crypto_datasetHLater$date_time_utc,
+                                                                                                     format = "%H:%M:%S"), "%H")), 1, 13)
+    crypto_dataset$pk_dummy <- substr(paste(as.POSIXct(crypto_dataset$date_time_utc,
+                                                       format = "%Y-%m-%d"), format(as.POSIXct(crypto_dataset$date_time_utc,
+                                                                                               format = "%H:%M:%S"), "%H")), 1, 13)
+    crypto_dataset$pkey <- paste(crypto_dataset$pk_dummy,
+                                 crypto_dataset$name)
+    crypto_datasetHLater$pkey <- paste(crypto_datasetHLater$pk_dummy,
+                                       crypto_datasetHLater$name)
+    crypto_datasetHLater$date_time_utc <- crypto_datasetHLater$date_time_utc +
+      lubridate::hours(units_offset)
+    crypto_datasetHLater <- dplyr::select(crypto_datasetHLater,
+                                          price_usd, pkey, date_time_utc) %>% dplyr::rename(price_usd_x_hoursLater = price_usd,
+                                                                                        date_time_utc_x_hoursLater = date_time_utc)
+    joinedDataset <- dplyr::left_join(crypto_dataset, crypto_datasetHLater,
+                                      by = "pkey")
+    joinedDataset <- joinedDataset %>% dplyr::distinct(pkey,
+                                                       .keep_all = TRUE)
+    joinedDataset$target_percent_change <- ((joinedDataset$price_usd_x_hoursLater -
+                                               joinedDataset$price_usd)/joinedDataset$price_usd) *
+      100
+    joinedDataset <- dplyr::select(joinedDataset, -price_usd_x_hoursLater,
+                                   -date_time_utc_x_hoursLater)
+    return(joinedDataset %>% dplyr::filter(!is.na(target_percent_change)))
+  }
+  else if (units == "days") {
+    crypto_datasetHLater <- crypto_dataset
+    crypto_datasetHLater$date_time_utc <- crypto_datasetHLater$date_time_utc -
+      lubridate::days(units_offset)
+    crypto_datasetHLater$pk_dummy <- substr(paste(as.POSIXct(crypto_datasetHLater$date_time_utc,
+                                                             format = "%Y-%m-%d"), format(as.POSIXct(crypto_datasetHLater$date_time_utc,
+                                                                                                     format = "%H:%M:%S"), "%H")), 1, 13)
+    crypto_dataset$pk_dummy <- substr(paste(as.POSIXct(crypto_dataset$date_time_utc,
+                                                       format = "%Y-%m-%d"), format(as.POSIXct(crypto_dataset$date_time_utc,
+                                                                                               format = "%H:%M:%S"), "%H")), 1, 13)
+    crypto_dataset$pkey <- paste(crypto_dataset$pk_dummy,
+                                 crypto_dataset$name)
+    crypto_datasetHLater$pkey <- paste(crypto_datasetHLater$pk_dummy,
+                                       crypto_datasetHLater$name)
+    crypto_datasetHLater$date_time_utc <- crypto_datasetHLater$date_time_utc +
+      lubridate::days(units_offset)
+    crypto_datasetHLater <- dplyr::select(crypto_datasetHLater,
+                                          price_usd, pkey, date_time_utc) %>% dplyr::rename(price_usd_x_daysLater = price_usd,
+                                                                                        date_time_utc_x_daysLater = date_time_utc)
+    joinedDataset <- dplyr::left_join(crypto_dataset, crypto_datasetHLater,
+                                      by = "pkey")
+    joinedDataset <- joinedDataset %>% dplyr::distinct(pkey,
+                                                       .keep_all = TRUE)
+    joinedDataset$target_percent_change <- ((joinedDataset$price_usd_x_daysLater -
+                                               joinedDataset$price_usd)/joinedDataset$price_usd) *
+      100
+    joinedDataset <- dplyr::select(joinedDataset, -price_usd_x_daysLater,
+                                   -date_time_utc_x_daysLater)
+    return(joinedDataset %>% dplyr::filter(!is.na(target_percent_change)))
+  }
 }
-# Note 04/21: Remember to create new tests
+
+#### IMPORTANT NOTE FOR CODE ABOVE. RATHER THAN HAVING "XhoursLater", find a way to concat the string of the field symbol with the user input units_offset! Important, do it before tutorial is too far along!
+
+# remember to create a function just like this but pre-made for a 24 hour period called calculate_24hour_perc_change()
