@@ -15,6 +15,7 @@ Imports:
     anytime,
     dplyr,
     pins,
+    janitor,
     lubridate,
     magrittr
 URL: https://github.com/ries9112/PredictCrypto

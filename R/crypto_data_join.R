@@ -4,7 +4,7 @@
 #'@importFrom anytime anytime
 #'@export
 crypto_data_join <- function(full_dataset, data_with_prices){
-  # resymbol fields
+  # rename fields
   data_with_prices$buy_price_low_ask <- data_with_prices$lowest_ask_1_price_usd
   data_with_prices$sell_price_high_bid <- data_with_prices$highest_bid_1_price_usd
   # initialize crypto_data
